@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/bishe?useSSL=false&serverTimezone=UTC
     username: root
     password: hjr19990619
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -48,6 +48,7 @@ spring:
 
   redis:
     password: lalalalala
+    database: 1
 
 management:
   endpoints:
