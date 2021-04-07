@@ -20,4 +20,11 @@ public class ServiceTest {
 
         System.out.println(studentList);
     }
+
+    @Test
+    public void testFindStudentByLoginName() {
+        Student student = studentService.findStudentByLoginName("test4");
+
+        System.out.println(student);
+    }
 }
