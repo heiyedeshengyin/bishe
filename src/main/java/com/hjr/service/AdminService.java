@@ -16,4 +16,8 @@ public class AdminService {
     public List<Admin> findAllAdmin() {
         return adminMapper.findAllAdmin();
     }
+
+    public Admin findAdminByLoginName(String loginName) {
+        return adminMapper.findAdminByLoginName(loginName);
+    }
 }

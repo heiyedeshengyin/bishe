@@ -11,4 +11,7 @@ public interface AdminMapper {
 
     @Select("select * from admin")
     List<Admin> findAllAdmin();
+
+    @Select("select * from admin where admin_login_name = #{loginName}")
+    Admin findAdminByLoginName(String loginName);
 }
