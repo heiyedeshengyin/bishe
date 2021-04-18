@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/bishe?useSSL=false&serverTimezone=UTC
-    username: root
-    password: hjr19990619
+    url: jdbc:mysql://localhost:3306/bishe?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: lala
+    password: lalalalala
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     druid:
