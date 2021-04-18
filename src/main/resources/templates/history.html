@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Index</title>
+</head>
+
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">checked_id</th>
+            <th scope="col">checked_time</th>
+            <th scope="col">checked_temperature</th>
+            <th scope="col">is_checked_delete</th>
+            <th scope="col">checked_student_id</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="checked : ${checkedList}">
+            <td th:text="${checked.checkedId}"></td>
+            <td th:text="${checked.checkedTime}"></td>
+            <td th:text="${checked.checkedTemperature}"></td>
+            <td th:text="${checked.isCheckedDelete}"></td>
+            <td th:text="${checked.checkedStudentId}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

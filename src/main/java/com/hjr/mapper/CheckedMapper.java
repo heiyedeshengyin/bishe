@@ -13,6 +13,9 @@ public interface CheckedMapper {
     @Select("select * from checked")
     List<Checked> findAllChecked();
 
+    @Select("select * from checked where checked_student_id = #{studentId}")
+    List<Checked> findCheckedByStudentId(Integer studentId);
+
     @Insert("insert into checked (checked_time, checked_temperature, is_checked_delete, checked_student_id) values (#{checkedTime}, #{checkedTemperature}, #{isCheckedDelete}, #{checkedStudentId})")
     void insertChecked(Checked checked);
 }

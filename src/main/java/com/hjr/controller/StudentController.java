@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 public class StudentController {
@@ -57,6 +59,20 @@ public class StudentController {
         Student student = (Student) session.getAttribute("student");
         if (student != null) {
             return "studentinfo";
+        }
+        else {
+            return "fail";
+        }
+    }
+
+    @RequestMapping("/checkhistory")
+    public String checkhistory(HttpServletRequest request, HttpSession session) {
+        Student student = (Student) session.getAttribute("student");
+        if (student != null) {
+            List<Checked> checkedList = checkedService.findCheckedByStudentId(student.getStudentId());
+            request.setAttribute("checkedList", checkedList);
+
+            return "history";
         }
         else {
             return "fail";

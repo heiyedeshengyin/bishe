@@ -35,6 +35,14 @@ public class ServiceTest {
     }
 
     @Test
+    public void testFindCheckedByStudentId() {
+        List<Checked> checkedList = checkedService.findCheckedByStudentId(2);
+        for (Checked checked : checkedList) {
+            System.out.println(checked);
+        }
+    }
+
+    @Test
     public void testInsertChecked() {
         Checked checked = new Checked();
         checked.setCheckedId(0);

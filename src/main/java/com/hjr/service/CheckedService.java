@@ -17,6 +17,10 @@ public class CheckedService {
         return checkedMapper.findAllChecked();
     }
 
+    public List<Checked> findCheckedByStudentId(Integer studentId) {
+        return checkedMapper.findCheckedByStudentId(studentId);
+    }
+
     public void insertChecked(Checked checked) {
         checkedMapper.insertChecked(checked);
     }
