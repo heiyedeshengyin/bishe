@@ -51,4 +51,15 @@ public class StudentController {
             return "fail";
         }
     }
+
+    @RequestMapping("/studentinfo")
+    public String studentinfo(HttpSession session) {
+        Student student = (Student) session.getAttribute("student");
+        if (student != null) {
+            return "studentinfo";
+        }
+        else {
+            return "fail";
+        }
+    }
 }

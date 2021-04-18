@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Index</title>
+</head>
+
+<body th:with="student=${#session.getAttribute('student')}">
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">项目</th>
+            <th scope="col">内容</th>
+            <th scope="col">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>studentId</td>
+            <td th:text="${student.studentId}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentLoginName</td>
+            <td th:text="${student.studentLoginName}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentPassword</td>
+            <td th:text="${student.studentPassword}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentName</td>
+            <td th:text="${student.studentName}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentPhone</td>
+            <td th:text="${student.studentPhone}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentWechat</td>
+            <td th:text="${student.studentWechat}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentQQ</td>
+            <td th:text="${student.studentQQ}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentBirthday</td>
+            <td th:text="${student.studentBirthday}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentHeight</td>
+            <td th:text="${student.studentHeight}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentWeight</td>
+            <td th:text="${student.studentWeight}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentGender</td>
+            <td th:text="${student.studentGender}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>isStudentDelete</td>
+            <td th:text="${student.isStudentDelete}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+        <tr>
+            <td>studentClassId</td>
+            <td th:text="${student.studentClassId}"></td>
+            <td>
+                <button class="btn btn-primary">操作</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -10,6 +10,8 @@
 
 <body th:with="student=${#session.getAttribute('student')}">
 <a class="btn btn-primary" th:href="@{/checkpage}" role="button">签到页面</a>
+<a class="btn btn-primary" th:href="@{/studentinfo}" role="button">个人信息</a>
+<a class="btn btn-primary" th:href="@{/checkhistory}" role="button">签到历史</a>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
