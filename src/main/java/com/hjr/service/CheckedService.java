@@ -16,4 +16,8 @@ public class CheckedService {
     public List<Checked> findAllChecked() {
         return checkedMapper.findAllChecked();
     }
+
+    public void insertChecked(Checked checked) {
+        checkedMapper.insertChecked(checked);
+    }
 }
