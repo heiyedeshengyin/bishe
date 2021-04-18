@@ -1,7 +1,7 @@
 package com.hjr.controller;
 
+import com.hjr.been.Admin;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -10,8 +10,13 @@ import javax.servlet.http.HttpSession;
 public class AdminController {
 
     @RequestMapping("/admin")
-    public String admin(@CookieValue("admin_login_name") String adminLoginName, HttpSession session) {
-
-        return "admin";
+    public String admin(HttpSession session) {
+        Admin admin = (Admin) session.getAttribute("admin");
+        if (admin != null) {
+            return "admin";
+        }
+        else {
+            return "fail";
+        }
     }
 }
