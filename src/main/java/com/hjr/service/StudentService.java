@@ -20,4 +20,8 @@ public class StudentService {
     public Student findStudentByLoginName(String loginName) {
         return studentMapper.findStudentByLoginName(loginName);
     }
+
+    public void updateStudent(Student student) {
+        studentMapper.updateStudent(student);
+    }
 }
