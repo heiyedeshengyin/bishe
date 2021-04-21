@@ -9,43 +9,81 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{/}">主页</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="container" th:if="${sessionFlag} eq 'none'">
+    <form method="post" th:action="@{/login}">
+        <div class="row">
+            <div class="col-12 col-md-2 offset-md-4">
+                <h1>登陆系统</h1>
+            </div>
+        </div>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="username-addon">用户名</span>
+                    </div>
+                    <input type="text" class="form-control" name="username" placeholder="学生或者管理员的用户名" aria-label="username" aria-describedby="username-addon">
                 </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-        </ul>
+            </div>
+        </div>
 
-        <form class="form-inline my-2 my-lg-0" method="post" action="/login">
-            <input class="form-control mr-sm-2" type="text" placeholder="用户名" aria-label="用户名" name="username">
-            <input class="form-control mr-sm-2" type="password" placeholder="密码" aria-label="密码" name="password">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">登陆</button>·
-        </form>
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="password-addon">密码</span>
+                    </div>
+                    <input type="password" class="form-control" name="password" placeholder="请输入密码" aria-label="password" aria-describedby="password-addon">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-6 col-md-1 offset-md-4">
+                <a class="btn btn-secondary" role="button" th:href="@{/register}">注册</a>
+            </div>
+
+            <div class="col-6 col-md-1 offset-md-1">
+                <button class="btn btn-primary" type="submit">登录</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container" th:if="${sessionFlag} eq 'student'" th:with="student=${#session.getAttribute('student')}">
+    <div class="row">
+        <div class="col-12 col-md-5 offset-md-3">
+            <h4 th:text="|你已作为学生登录 ${student.studentName}|"></h4>
+        </div>
     </div>
-</nav>
+
+    <div class="row mb-3">
+        <div class="col-6 col-md-2 offset-md-3">
+            <a class="btn btn-secondary" role="button" th:href="@{/exit}">退出登录</a>
+        </div>
+
+        <div class="col-6 col-md-2 offset-md-1">
+            <a class="btn btn-primary" role="button" th:href="@{/student}">进入系统</a>
+        </div>
+    </div>
+</div>
+<div class="container" th:if="${sessionFlag} eq 'admin'" th:with="admin=${#session.getAttribute('admin')}">
+    <div class="row">
+        <div class="col-12 col-md-5 offset-md-3">
+            <h4 th:text="|你已作为管理员登录 ${admin.adminName}|"></h4>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-6 col-md-2 offset-md-3">
+            <a class="btn btn-secondary" role="button" th:href="@{/exit}">退出登录</a>
+        </div>
+
+        <div class="col-6 col-md-2 offset-md-1">
+            <a class="btn btn-primary" role="button" th:href="@{/admin}">进入系统</a>
+        </div>
+    </div>
+</div>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>

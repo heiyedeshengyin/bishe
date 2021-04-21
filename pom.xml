@@ -97,7 +97,6 @@
             <artifactId>bootstrap</artifactId>
             <version>4.6.0</version>
         </dependency>
-
     </dependencies>
 
     <build>
