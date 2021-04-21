@@ -20,7 +20,7 @@ public class HasStudentSessionInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        log.info("Session Not Found! Handler: " + handler.toString());
+        log.info("Student Session Not Found! Handler: " + handler.toString());
         response.sendRedirect(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
         return false;
     }

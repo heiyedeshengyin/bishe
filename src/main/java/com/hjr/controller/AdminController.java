@@ -80,4 +80,11 @@ public class AdminController {
 
         return "redirect:/admin/info";
     }
+
+    @RequestMapping("/exit")
+    public String exit(HttpSession session) {
+        session.removeAttribute("admin");
+
+        return "redirect:/";
+    }
 }

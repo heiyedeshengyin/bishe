@@ -92,4 +92,11 @@ public class StudentController {
 
         return "redirect:/student/info";
     }
+
+    @RequestMapping("/exit")
+    public String exit(HttpSession session) {
+        session.removeAttribute("student");
+
+        return "redirect:/";
+    }
 }
