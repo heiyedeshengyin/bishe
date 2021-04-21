@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Admin Info</title>
+</head>
+
+<body th:with="admin=${#session.getAttribute('admin')}">
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">项目</th>
+            <th scope="col">内容</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>管理员姓名</td>
+            <td th:text="${admin.adminName}"></td>
+        </tr>
+        <tr>
+            <td>管理员电话</td>
+            <td th:text="${admin.adminPhone}"></td>
+        </tr>
+        <tr>
+            <td>管理员微信</td>
+            <td th:text="${admin.adminWechat}"></td>
+        </tr>
+        <tr>
+            <td>管理员QQ</td>
+            <td th:text="${admin.adminQQ}"></td>
+        </tr>
+        <tr>
+            <td>管理员生日</td>
+            <td th:text="${admin.adminBirthday}"></td>
+        </tr>
+        <tr th:switch="${admin.adminGender}">
+            <td>管理员性别</td>
+            <td th:case="1">男</td>
+            <td th:case="2">女</td>
+            <td th:case="*">不确定</td>
+        </tr>
+    </tbody>
+</table>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -45,4 +45,9 @@ public class AdminController {
 
         return "history";
     }
+
+    @RequestMapping("/info")
+    public String info() {
+        return "admininfo";
+    }
 }
