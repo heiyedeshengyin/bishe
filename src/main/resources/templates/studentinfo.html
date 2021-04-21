@@ -14,103 +14,139 @@
         <tr>
             <th scope="col">项目</th>
             <th scope="col">内容</th>
-            <th scope="col">操作</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>studentId</td>
             <td th:text="${student.studentId}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentLoginName</td>
             <td th:text="${student.studentLoginName}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentPassword</td>
             <td th:text="${student.studentPassword}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentName</td>
             <td th:text="${student.studentName}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentPhone</td>
             <td th:text="${student.studentPhone}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentWechat</td>
             <td th:text="${student.studentWechat}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentQQ</td>
             <td th:text="${student.studentQQ}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentBirthday</td>
             <td th:text="${student.studentBirthday}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentHeight</td>
             <td th:text="${student.studentHeight}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentWeight</td>
             <td th:text="${student.studentWeight}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentGender</td>
             <td th:text="${student.studentGender}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>isStudentDelete</td>
             <td th:text="${student.isStudentDelete}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
         <tr>
             <td>studentClassId</td>
             <td th:text="${student.studentClassId}"></td>
-            <td>
-                <button class="btn btn-primary">操作</button>
-            </td>
         </tr>
     </tbody>
 </table>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateStudentInfoModal">修改学生信息</button>
+
+<form method="post" th:action="@{/updatestudentinfo}">
+    <div class="modal fade" id="updateStudentInfoModal" tabindex="-1" aria-labelledby="updateStudentInfoModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateStudentInfoModalLabel" th:text="|Update Student ${student.studentName}|">Update Student</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="updateStudentName" class="col-form-label">studentName:</label>
+                        <input type="text" class="form-control" id="updateStudentName" name="studentName" th:value="${student.studentName}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateStudentPhone" class="col-form-label">studentPhone:</label>
+                        <input type="text" class="form-control" id="updateStudentPhone" name="studentPhone" th:value="${student.studentPhone}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateStudentWechat" class="col-form-label">studentWechat:</label>
+                        <input type="text" class="form-control" id="updateStudentWechat" name="studentWechat" th:value="${student.studentWechat}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateStudentQQ" class="col-form-label">studentQQ:</label>
+                        <input type="text" class="form-control" id="updateStudentQQ" name="studentQQ" th:value="${student.studentQQ}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateStudentBirthday" class="col-form-label">studentBirthday:</label>
+                        <input type="text" class="form-control" id="updateStudentBirthday" name="studentBirthday" th:value="${student.studentBirthday}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateStudentHeight" class="col-form-label">studentHeight:</label>
+                        <input type="text" class="form-control" id="updateStudentHeight" name="studentHeight" th:value="${student.studentHeight}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateStudentWeight" class="col-form-label">studentWeight:</label>
+                        <input type="text" class="form-control" id="updateStudentWeight" name="studentWeight" th:value="${student.studentWeight}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateStudentGender" class="col-form-label">studentGender:</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="studentGender" id="updateStudentGender" value="0" th:checked="${student.studentGender eq 0}">
+                            <label class="form-check-label" for="updateStudentGender">不确定</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="studentGender" id="updateStudentMaleGender" value="1" th:checked="${student.studentGender eq 1}">
+                            <label class="form-check-label" for="updateStudentMaleGender">男</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="studentGender" id="updateStudentFemaleGender" value="2" th:checked="${student.studentGender eq 2}">
+                            <label class="form-check-label" for="updateStudentFemaleGender">女</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>

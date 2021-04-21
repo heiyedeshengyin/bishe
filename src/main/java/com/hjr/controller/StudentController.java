@@ -3,12 +3,15 @@ package com.hjr.controller;
 import com.hjr.been.Checked;
 import com.hjr.been.Student;
 import com.hjr.service.CheckedService;
+import com.hjr.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,6 +20,9 @@ public class StudentController {
 
     @Autowired
     private CheckedService checkedService;
+
+    @Autowired
+    private StudentService studentService;
 
     @RequestMapping("/student")
     public String student(HttpSession session) {
@@ -73,6 +79,37 @@ public class StudentController {
             request.setAttribute("checkedList", checkedList);
 
             return "history";
+        }
+        else {
+            return "fail";
+        }
+    }
+
+    @PostMapping("/updatestudentinfo")
+    public String updatestudentinfo(HttpSession session, String studentName, String studentPhone,
+                                    String studentWechat, String studentQQ, LocalDate studentBirthday,
+                                    String studentHeight, String studentWeight, Integer studentGender) {
+        Student student = (Student) session.getAttribute("student");
+        if (student != null) {
+            Student updateStudent = new Student();
+            updateStudent.setStudentId(student.getStudentId());
+            updateStudent.setStudentLoginName(student.getStudentLoginName());
+            updateStudent.setStudentPassword(student.getStudentPassword());
+            updateStudent.setStudentName(studentName);
+            updateStudent.setStudentPhone(studentPhone);
+            updateStudent.setStudentWechat(studentWechat);
+            updateStudent.setStudentQQ(studentQQ);
+            updateStudent.setStudentBirthday(studentBirthday);
+            updateStudent.setStudentHeight(studentHeight);
+            updateStudent.setStudentWeight(studentWeight);
+            updateStudent.setStudentGender(studentGender);
+            updateStudent.setIsStudentDelete(student.getIsStudentDelete());
+            updateStudent.setStudentClassId(student.getStudentClassId());
+
+            studentService.updateStudent(updateStudent);
+            session.setAttribute("student", updateStudent);
+
+            return "redirect:/studentinfo";
         }
         else {
             return "fail";
