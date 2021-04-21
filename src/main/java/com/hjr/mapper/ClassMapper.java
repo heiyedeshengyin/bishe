@@ -11,4 +11,7 @@ public interface ClassMapper {
 
     @Select("select * from class")
     List<Class> findAllClass();
+
+    @Select("select * from class where class_id = #{classId}")
+    Class findClassById(Integer classId);
 }

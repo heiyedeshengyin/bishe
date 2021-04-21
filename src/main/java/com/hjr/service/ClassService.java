@@ -16,4 +16,8 @@ public class ClassService {
     public List<Class> findAllClass() {
         return classMapper.findAllClass();
     }
+
+    public Class findClassById(Integer classId) {
+        return classMapper.findClassById(classId);
+    }
 }
