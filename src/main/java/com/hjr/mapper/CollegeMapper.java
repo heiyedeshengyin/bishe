@@ -11,4 +11,7 @@ public interface CollegeMapper {
 
     @Select("select * from college")
     List<College> findAllCollege();
+
+    @Select("select * from college where college_id = #{collegeId}")
+    College findCollegeById(Integer collegeId);
 }

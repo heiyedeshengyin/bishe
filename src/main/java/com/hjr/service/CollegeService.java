@@ -16,4 +16,8 @@ public class CollegeService {
     public List<College> findAllCollege() {
         return collegeMapper.findAllCollege();
     }
+
+    public College findCollegeById(Integer collegeId) {
+        return collegeMapper.findCollegeById(collegeId);
+    }
 }

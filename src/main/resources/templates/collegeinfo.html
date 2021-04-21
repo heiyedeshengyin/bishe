@@ -8,11 +8,10 @@
     <title>Index</title>
 </head>
 
-<body th:with="student=${#session.getAttribute('student')}">
+<body>
 <div class="alert alert-primary" role="alert">
-    班级姓名: [[${class.className}]]
+    学院姓名: [[${college.collegeName}]]
 </div>
-<a class="btn btn-primary" th:href="@{/collegeinfo(id=${class.classCollegeId})}" role="button">查看学院信息</a>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
