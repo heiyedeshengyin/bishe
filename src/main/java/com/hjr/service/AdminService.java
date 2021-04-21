@@ -20,4 +20,8 @@ public class AdminService {
     public Admin findAdminByLoginName(String loginName) {
         return adminMapper.findAdminByLoginName(loginName);
     }
+
+    public void updateAdmin(Admin admin) {
+        adminMapper.updateAdmin(admin);
+    }
 }
