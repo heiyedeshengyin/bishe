@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
@@ -23,7 +24,7 @@ public class AdminController {
     @Autowired
     private CheckedService checkedService;
 
-    @RequestMapping("/admin")
+    @RequestMapping
     public String admin() {
         return "admin";
     }

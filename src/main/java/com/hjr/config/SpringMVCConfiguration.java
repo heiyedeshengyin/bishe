@@ -19,11 +19,11 @@ public class SpringMVCConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HasStudentSessionInterceptor())
-                .addPathPatterns("/student", "/checkpage", "/check", "/studentinfo", "/checkhistory", "/updatestudentinfo")
+                .addPathPatterns("/student/**")
                 .order(0);
 
         registry.addInterceptor(new HasAdminSessionInterceptor())
-                .addPathPatterns("/admin", "/studentlist", "/checkedlist")
+                .addPathPatterns("/admin/**")
                 .order(1);
     }
 }

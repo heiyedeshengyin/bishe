@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
+@RequestMapping("/student")
 public class StudentController {
 
     @Autowired
@@ -24,13 +25,13 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @RequestMapping("/student")
+    @RequestMapping
     public String student() {
         return "student";
     }
 
-    @RequestMapping("/checkpage")
-    public String checkpage() {
+    @RequestMapping("/checked")
+    public String checked() {
         return "check";
     }
 
@@ -47,16 +48,16 @@ public class StudentController {
 
         checkedService.insertChecked(checked);
 
-        return "redirect:/checkhistory";
+        return "redirect:/student/history";
     }
 
-    @RequestMapping("/studentinfo")
-    public String studentinfo() {
+    @RequestMapping("/info")
+    public String info() {
         return "studentinfo";
     }
 
-    @RequestMapping("/checkhistory")
-    public String checkhistory(HttpServletRequest request, HttpSession session) {
+    @RequestMapping("/history")
+    public String history(HttpServletRequest request, HttpSession session) {
         Student student = (Student) session.getAttribute("student");
 
         List<Checked> checkedList = checkedService.findCheckedByStudentId(student.getStudentId());
@@ -65,8 +66,8 @@ public class StudentController {
         return "history";
     }
 
-    @PostMapping("/updatestudentinfo")
-    public String updatestudentinfo(HttpSession session, String studentName, String studentPhone,
+    @PostMapping("/update")
+    public String update(HttpSession session, String studentName, String studentPhone,
                                     String studentWechat, String studentQQ, LocalDate studentBirthday,
                                     String studentHeight, String studentWeight, Integer studentGender) {
         Student student = (Student) session.getAttribute("student");
@@ -89,6 +90,6 @@ public class StudentController {
         studentService.updateStudent(updateStudent);
         session.setAttribute("student", updateStudent);
 
-        return "redirect:/studentinfo";
+        return "redirect:/student/info";
     }
 }
