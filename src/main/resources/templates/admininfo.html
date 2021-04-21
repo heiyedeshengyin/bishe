@@ -46,6 +46,71 @@
     </tbody>
 </table>
 
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateAdminInfoModal">修改管理员信息</button>
+
+<form method="post" th:action="@{/admin/update}">
+    <div class="modal fade" id="updateAdminInfoModal" tabindex="-1" aria-labelledby="updateAdminInfoModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateAdminInfoModalLabel" th:text="|Update Admin ${admin.adminName}|">Update Admin</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="updateAdminName" class="col-form-label">管理员姓名</label>
+                        <input type="text" class="form-control" id="updateAdminName" name="adminName" th:value="${admin.adminName}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateAdminPhone" class="col-form-label">管理员电话</label>
+                        <input type="text" class="form-control" id="updateAdminPhone" name="adminPhone" th:value="${admin.adminPhone}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateAdminWechat" class="col-form-label">管理员微信</label>
+                        <input type="text" class="form-control" id="updateAdminWechat" name="adminWechat" th:value="${admin.adminWechat}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateAdminQQ" class="col-form-label">管理员QQ</label>
+                        <input type="text" class="form-control" id="updateAdminQQ" name="adminQQ" th:value="${admin.adminQQ}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateAdminBirthday" class="col-form-label">管理员生日</label>
+                        <input type="text" class="form-control" id="updateAdminBirthday" name="adminBirthday" th:value="${admin.adminBirthday}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateAdminGender" class="col-form-label">管理员性别</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="adminGender" id="updateAdminGender" value="0" th:checked="${admin.adminGender eq 0}">
+                            <label class="form-check-label" for="updateAdminGender">不确定</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="adminGender" id="updateAdminMaleGender" value="1" th:checked="${admin.adminGender eq 1}">
+                            <label class="form-check-label" for="updateAdminMaleGender">男</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="adminGender" id="updateAdminFemaleGender" value="2" th:checked="${admin.adminGender eq 2}">
+                            <label class="form-check-label" for="updateAdminFemaleGender">女</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
