@@ -1,5 +1,6 @@
 package com.hjr.controller;
 
+import com.hjr.been.Admin;
 import com.hjr.been.Class;
 import com.hjr.been.Student;
 import com.hjr.service.ClassService;
@@ -26,8 +27,16 @@ public class ClassController {
 
             return "classinfo";
         }
-        else {
-            return "fail";
+
+        Admin admin = (Admin) session.getAttribute("admin");
+        if (admin != null) {
+            Integer studentClassId = admin.getAdminClassId();
+            Class classByid = classService.findClassById(studentClassId);
+            request.setAttribute("class", classByid);
+
+            return "classinfo";
         }
+
+        return "redirect:/";
     }
 }

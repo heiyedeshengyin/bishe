@@ -25,14 +25,8 @@ public class StudentController {
     private StudentService studentService;
 
     @RequestMapping("/student")
-    public String student(HttpSession session) {
-        Student student = (Student) session.getAttribute("student");
-        if (student != null) {
-            return "student";
-        }
-        else {
-            return "fail";
-        }
+    public String student() {
+        return "student";
     }
 
     @RequestMapping("/checkpage")
@@ -40,49 +34,35 @@ public class StudentController {
         return "check";
     }
 
-    @RequestMapping("/check")
+    @PostMapping("/check")
     public String check(String temperature, HttpSession session) {
         Student student = (Student) session.getAttribute("student");
-        if (student != null) {
-            Checked checked = new Checked();
-            checked.setCheckedId(0);
-            checked.setCheckedTime(LocalDateTime.now());
-            checked.setCheckedTemperature(temperature);
-            checked.setIsCheckedDelete(false);
-            checked.setCheckedStudentId(student.getStudentId());
 
-            checkedService.insertChecked(checked);
+        Checked checked = new Checked();
+        checked.setCheckedId(0);
+        checked.setCheckedTime(LocalDateTime.now());
+        checked.setCheckedTemperature(temperature);
+        checked.setIsCheckedDelete(false);
+        checked.setCheckedStudentId(student.getStudentId());
 
-            return "success";
-        }
-        else {
-            return "fail";
-        }
+        checkedService.insertChecked(checked);
+
+        return "redirect:/checkhistory";
     }
 
     @RequestMapping("/studentinfo")
-    public String studentinfo(HttpSession session) {
-        Student student = (Student) session.getAttribute("student");
-        if (student != null) {
-            return "studentinfo";
-        }
-        else {
-            return "fail";
-        }
+    public String studentinfo() {
+        return "studentinfo";
     }
 
     @RequestMapping("/checkhistory")
     public String checkhistory(HttpServletRequest request, HttpSession session) {
         Student student = (Student) session.getAttribute("student");
-        if (student != null) {
-            List<Checked> checkedList = checkedService.findCheckedByStudentId(student.getStudentId());
-            request.setAttribute("checkedList", checkedList);
 
-            return "history";
-        }
-        else {
-            return "fail";
-        }
+        List<Checked> checkedList = checkedService.findCheckedByStudentId(student.getStudentId());
+        request.setAttribute("checkedList", checkedList);
+
+        return "history";
     }
 
     @PostMapping("/updatestudentinfo")
@@ -90,29 +70,25 @@ public class StudentController {
                                     String studentWechat, String studentQQ, LocalDate studentBirthday,
                                     String studentHeight, String studentWeight, Integer studentGender) {
         Student student = (Student) session.getAttribute("student");
-        if (student != null) {
-            Student updateStudent = new Student();
-            updateStudent.setStudentId(student.getStudentId());
-            updateStudent.setStudentLoginName(student.getStudentLoginName());
-            updateStudent.setStudentPassword(student.getStudentPassword());
-            updateStudent.setStudentName(studentName);
-            updateStudent.setStudentPhone(studentPhone);
-            updateStudent.setStudentWechat(studentWechat);
-            updateStudent.setStudentQQ(studentQQ);
-            updateStudent.setStudentBirthday(studentBirthday);
-            updateStudent.setStudentHeight(studentHeight);
-            updateStudent.setStudentWeight(studentWeight);
-            updateStudent.setStudentGender(studentGender);
-            updateStudent.setIsStudentDelete(student.getIsStudentDelete());
-            updateStudent.setStudentClassId(student.getStudentClassId());
 
-            studentService.updateStudent(updateStudent);
-            session.setAttribute("student", updateStudent);
+        Student updateStudent = new Student();
+        updateStudent.setStudentId(student.getStudentId());
+        updateStudent.setStudentLoginName(student.getStudentLoginName());
+        updateStudent.setStudentPassword(student.getStudentPassword());
+        updateStudent.setStudentName(studentName);
+        updateStudent.setStudentPhone(studentPhone);
+        updateStudent.setStudentWechat(studentWechat);
+        updateStudent.setStudentQQ(studentQQ);
+        updateStudent.setStudentBirthday(studentBirthday);
+        updateStudent.setStudentHeight(studentHeight);
+        updateStudent.setStudentWeight(studentWeight);
+        updateStudent.setStudentGender(studentGender);
+        updateStudent.setIsStudentDelete(student.getIsStudentDelete());
+        updateStudent.setStudentClassId(student.getStudentClassId());
 
-            return "redirect:/studentinfo";
-        }
-        else {
-            return "fail";
-        }
+        studentService.updateStudent(updateStudent);
+        session.setAttribute("student", updateStudent);
+
+        return "redirect:/studentinfo";
     }
 }

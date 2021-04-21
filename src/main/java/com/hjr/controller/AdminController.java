@@ -11,12 +11,6 @@ public class AdminController {
 
     @RequestMapping("/admin")
     public String admin(HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("admin");
-        if (admin != null) {
-            return "admin";
-        }
-        else {
-            return "fail";
-        }
+        return "admin";
     }
 }
