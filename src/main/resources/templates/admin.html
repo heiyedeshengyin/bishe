@@ -8,9 +8,8 @@
     <title>Admin Page</title>
 </head>
 
-<body th:with="admin=${#session.getAttribute('admin')}">
-管理员登陆成功
-[[${admin.adminName}]]
+<body>
+<a class="btn btn-primary" th:href="@{/studentlist}" role="button">学生列表</a>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>

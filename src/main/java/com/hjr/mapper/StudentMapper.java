@@ -13,6 +13,9 @@ public interface StudentMapper {
     @Select("select * from student")
     List<Student> findAllStudent();
 
+    @Select("select * from student where student_class_id = #{classId}")
+    List<Student> findStudentByClassId(Integer classId);
+
     @Select("select * from student where student_login_name = #{loginName}")
     Student findStudentByLoginName(String loginName);
 

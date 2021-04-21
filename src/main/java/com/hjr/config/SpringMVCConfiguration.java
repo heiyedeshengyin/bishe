@@ -25,7 +25,7 @@ public class SpringMVCConfiguration implements WebMvcConfigurer {
                 .order(0);
 
         registry.addInterceptor(new HasAdminSessionInterceptor())
-                .addPathPatterns("/admin")
+                .addPathPatterns("/admin", "/studentlist")
                 .order(1);
     }
 }
