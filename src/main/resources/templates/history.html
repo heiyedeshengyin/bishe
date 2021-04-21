@@ -12,20 +12,14 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">checked_id</th>
-            <th scope="col">checked_time</th>
-            <th scope="col">checked_temperature</th>
-            <th scope="col">is_checked_delete</th>
-            <th scope="col">checked_student_id</th>
+            <th scope="col">签到时间</th>
+            <th scope="col">体温</th>
         </tr>
     </thead>
     <tbody>
         <tr th:each="checked : ${checkedList}">
-            <td th:text="${checked.checkedId}"></td>
             <td th:text="${checked.checkedTime}"></td>
             <td th:text="${checked.checkedTemperature}"></td>
-            <td th:text="${checked.isCheckedDelete}"></td>
-            <td th:text="${checked.checkedStudentId}"></td>
         </tr>
     </tbody>
 </table>
