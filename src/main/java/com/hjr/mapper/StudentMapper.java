@@ -1,10 +1,12 @@
 package com.hjr.mapper;
 
 import com.hjr.been.Student;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
@@ -29,4 +31,15 @@ public interface StudentMapper {
             "student_gender = #{studentGender} " +
             "where student_id = #{studentId}")
     void updateStudent(Student student);
+
+    @Insert("insert into student " +
+            "(student_login_name, student_password, student_name, student_phone, " +
+            "student_wechat, student_qq, student_birthday, student_height, " +
+            "student_weight, student_gender, is_student_delete, student_class_id) " +
+            "values (#{studentLoginName}, #{studentPassword}, #{studentName}, #{studentPhone}, " +
+            "#{studentWechat}, #{studentQQ}, #{studentBirthday}, #{studentHeight}, " +
+            "#{studentWeight}, #{studentGender}, #{isStudentDelete}, #{studentClassId})")
+    void insertIntoStudent(String studentLoginName, String studentPassword, String studentName, String studentPhone,
+                           String studentWechat, String studentQQ, LocalDate studentBirthday, String studentHeight,
+                           String studentWeight, Integer studentGender, Boolean isStudentDelete, Integer studentClassId);
 }

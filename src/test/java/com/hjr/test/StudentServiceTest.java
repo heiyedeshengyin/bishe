@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootTest
@@ -41,5 +42,25 @@ public class StudentServiceTest {
         student.setStudentWechat("ddwefv");
 
         studentService.updateStudent(student);
+    }
+
+    @Test
+    @DisplayName("StudentService insertIntoStudent Test")
+    public void testInsertIntoStudent() {
+        Student student = new Student();
+        student.setStudentLoginName("qwertyu");
+        student.setStudentPassword("zxcvbnm");
+        student.setStudentName("hehe");
+        student.setStudentPhone("14533562674");
+        student.setStudentWechat("p3n5bf");
+        student.setStudentQQ("1263477694");
+        student.setStudentBirthday(LocalDate.of(2001, 3, 18));
+        student.setStudentHeight("176");
+        student.setStudentWeight("55.2");
+        student.setStudentGender(2);
+        student.setIsStudentDelete(false);
+        student.setStudentClassId(5);
+
+        studentService.insertIntoStudent(student);
     }
 }

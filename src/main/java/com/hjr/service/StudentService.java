@@ -28,4 +28,11 @@ public class StudentService {
     public void updateStudent(Student student) {
         studentMapper.updateStudent(student);
     }
+
+    public void insertIntoStudent(Student student) {
+        studentMapper.insertIntoStudent(student.getStudentLoginName(), student.getStudentPassword(), student.getStudentName(),
+                student.getStudentPhone(), student.getStudentWechat(), student.getStudentQQ(), student.getStudentBirthday(),
+                student.getStudentHeight(), student.getStudentWeight(), student.getStudentGender(), student.getIsStudentDelete(),
+                student.getStudentClassId());
+    }
 }
