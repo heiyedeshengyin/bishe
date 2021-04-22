@@ -28,6 +28,14 @@ public class AdminServiceTest {
     }
 
     @Test
+    @DisplayName("AdminService findIdByLoginName Test")
+    public void testFindIdByLoginName() {
+        Integer id = adminService.findIdByLoginName("admin2");
+
+        System.out.println(id);
+    }
+
+    @Test
     @DisplayName("AdminService findAdminByLoginName Test")
     public void testFindAdminByLoginName() {
         Admin admin = adminService.findAdminByLoginName("admin");
@@ -45,6 +53,7 @@ public class AdminServiceTest {
 
     @Test
     @DisplayName("AdminService insertIntoAdmin Test")
+    @Disabled
     public void testInsertIntoAdmin() {
         Admin admin = new Admin();
         admin.setAdminLoginName("admin3");

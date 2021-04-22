@@ -27,6 +27,14 @@ public class StudentServiceTest {
     }
 
     @Test
+    @DisplayName("StudentService findIdByLoginName Test")
+    public void testFindIdByLoginName() {
+        Integer id = studentService.findIdByLoginName("test2");
+
+        System.out.println(id);
+    }
+
+    @Test
     @DisplayName("StudentService findStudentByLoginName Test")
     public void testFindStudentByLoginName() {
         Student student = studentService.findStudentByLoginName("test3");
@@ -39,7 +47,7 @@ public class StudentServiceTest {
     @Disabled
     public void testUpdateStudent() {
         Student student = studentService.findStudentByLoginName("test3");
-        student.setStudentWechat("ddwefv");
+        student.setStudentWechat("ddwdwev");
 
         studentService.updateStudent(student);
     }

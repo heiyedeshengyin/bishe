@@ -21,6 +21,10 @@ public class StudentService {
         return studentMapper.findStudentByClassId(classId);
     }
 
+    public Integer findIdByLoginName(String loginName) {
+        return studentMapper.findIdByLoginName(loginName);
+    }
+
     public Student findStudentByLoginName(String loginName) {
         return studentMapper.findStudentByLoginName(loginName);
     }

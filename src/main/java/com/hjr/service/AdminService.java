@@ -17,6 +17,10 @@ public class AdminService {
         return adminMapper.findAllAdmin();
     }
 
+    public Integer findIdByLoginName(String loginName) {
+        return adminMapper.findIdByLoginName(loginName);
+    }
+
     public Admin findAdminByLoginName(String loginName) {
         return adminMapper.findAdminByLoginName(loginName);
     }
