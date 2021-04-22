@@ -62,6 +62,7 @@ public class StudentController {
 
         List<Checked> checkedList = checkedService.findCheckedByStudentId(student.getStudentId());
         request.setAttribute("checkedList", checkedList);
+        request.setAttribute("sessionFlag", "student");
 
         return "history";
     }

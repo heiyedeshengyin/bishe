@@ -47,6 +47,8 @@
 </table>
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateAdminInfoModal">修改管理员信息</button>
+<a class="btn btn-primary" th:href="@{/classinfo}" role="button">查看班级信息</a>
+<a class="btn btn-primary" th:href="@{/admin}" role="button">返回管理员主页</a>
 
 <form method="post" th:action="@{/admin/update}">
     <div class="modal fade" id="updateAdminInfoModal" tabindex="-1" aria-labelledby="updateAdminInfoModal" aria-hidden="true">

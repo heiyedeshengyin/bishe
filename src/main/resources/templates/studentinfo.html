@@ -56,6 +56,7 @@
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateStudentInfoModal">修改学生信息</button>
 <a class="btn btn-primary" th:href="@{/classinfo}" role="button">查看班级信息</a>
+<a class="btn btn-primary" th:href="@{/student}" role="button">返回学生主页</a>
 
 <form method="post" th:action="@{/student/update}">
     <div class="modal fade" id="updateStudentInfoModal" tabindex="-1" aria-labelledby="updateStudentInfoModal" aria-hidden="true">

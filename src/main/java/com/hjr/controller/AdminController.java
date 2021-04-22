@@ -48,6 +48,7 @@ public class AdminController {
     public String checkedlist(HttpServletRequest request, @RequestParam("id") Integer studentId) {
         List<Checked> checkedList = checkedService.findCheckedByStudentId(studentId);
         request.setAttribute("checkedList", checkedList);
+        request.setAttribute("sessionFlag", "admin");
 
         return "history";
     }
