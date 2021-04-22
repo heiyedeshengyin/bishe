@@ -46,6 +46,7 @@ public class StudentServiceTest {
 
     @Test
     @DisplayName("StudentService insertIntoStudent Test")
+    @Disabled
     public void testInsertIntoStudent() {
         Student student = new Student();
         student.setStudentLoginName("qwertyu");

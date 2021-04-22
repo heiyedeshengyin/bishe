@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Register Student</title>
+</head>
+
+<body>
+<div class="container">
+    <form method="post" th:action="@{/register/insertstudent}">
+        <div class="row">
+            <div class="col-12 col-md-2 offset-md-4">
+                <h1>学生注册</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentLoginName">学生登录名</label>
+                    <input type="text" class="form-control" id="studentLoginName" name="studentLoginName">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentPassword">学生登录密码</label>
+                    <input type="password" class="form-control" id="studentPassword" name="studentPassword">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentPasswordRepeat">重复密码</label>
+                    <input type="password" class="form-control" id="studentPasswordRepeat">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentName">学生姓名</label>
+                    <input type="text" class="form-control" id="studentName" name="studentName">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentPhone">学生电话</label>
+                    <input type="text" class="form-control" id="studentPhone" name="studentPhone">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentWechat">学生微信</label>
+                    <input type="text" class="form-control" id="studentWechat" name="studentWechat">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentQQ">学生QQ</label>
+                    <input type="text" class="form-control" id="studentQQ" name="studentQQ">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentBirthday">学生生日</label>
+                    <input type="text" class="form-control" id="studentBirthday" name="studentBirthday" aria-describedby="birthdayHelp">
+                    <small id="birthdayHelp" class="form-text text-muted">必须是yyyy-MM-dd格式</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentHeight">学生身高</label>
+                    <input type="text" class="form-control" id="studentHeight" name="studentHeight">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentWeight">学生体重</label>
+                    <input type="text" class="form-control" id="studentWeight" name="studentWeight">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentGender">学生性别</label> <p/>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="studentGender" id="studentGender" value="0">
+                        <label class="form-check-label" for="studentGender">不确定</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="studentGender" id="studentGenderMale" value="1">
+                        <label class="form-check-label" for="studentGenderMale">男</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="studentGender" id="studentGenderFemale" value="2">
+                        <label class="form-check-label" for="studentGenderFemale">女</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="studentClassId">选择学生班级</label>
+                    <select class="form-control" id="studentClassId" name="studentClassId">
+                        <option selected>请选择...</option>
+                        <option th:each="class : ${allClass}" th:value="${class.classId}" th:text="${class.className}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-2 offset-md-5">
+                <button class="btn btn-primary" type="submit">注册</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

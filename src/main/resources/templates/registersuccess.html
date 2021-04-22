@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Register Success</title>
+</head>
+
+<body>
+<div th:if="${sessionFlag} eq 'student'">学生注册成功</div>
+<div th:if="${sessionFlag} eq 'admin'">管理员注册成功</div>
+<a class="btn btn-primary" th:href="@{/exit}" role="button">回到登录界面</a>
+<a class="btn btn-primary" th:if="${sessionFlag} eq 'student'" th:href="@{/student}" role="button">进入学生主页</a>
+<a class="btn btn-primary" th:if="${sessionFlag} eq 'admin'" th:href="@{/admin}" role="button">进入管理员主页</a>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
