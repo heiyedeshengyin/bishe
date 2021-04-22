@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootTest
@@ -40,5 +41,23 @@ public class AdminServiceTest {
         Admin admin = adminService.findAdminByLoginName("admin");
         admin.setAdminQQ("124353467");
         adminService.updateAdmin(admin);
+    }
+
+    @Test
+    @DisplayName("AdminService insertIntoAdmin Test")
+    public void testInsertIntoAdmin() {
+        Admin admin = new Admin();
+        admin.setAdminLoginName("admin3");
+        admin.setAdminPassword("admin3");
+        admin.setAdminName("admin3");
+        admin.setAdminPhone("12542135642");
+        admin.setAdminWechat("12f43");
+        admin.setAdminQQ("2432313342");
+        admin.setAdminBirthday(LocalDate.of(1995, 3, 3));
+        admin.setAdminGender(2);
+        admin.setIsAdminDelete(false);
+        admin.setAdminClassId(5);
+
+        adminService.insertIntoAdmin(admin);
     }
 }

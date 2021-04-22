@@ -24,4 +24,10 @@ public class AdminService {
     public void updateAdmin(Admin admin) {
         adminMapper.updateAdmin(admin);
     }
+
+    public void insertIntoAdmin(Admin admin) {
+        adminMapper.insertIntoAdmin(admin.getAdminLoginName(), admin.getAdminPassword(), admin.getAdminName(),
+                admin.getAdminPhone(), admin.getAdminWechat(), admin.getAdminQQ(), admin.getAdminBirthday(),
+                admin.getAdminGender(), admin.getIsAdminDelete(), admin.getAdminClassId());
+    }
 }

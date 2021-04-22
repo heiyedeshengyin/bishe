@@ -67,13 +67,15 @@ public class RegisterController {
         Student student = (Student) session.getAttribute("student");
         if (student != null) {
             request.setAttribute("sessionFlag", "student");
+            return "registersuccess";
         }
 
         Admin admin = (Admin) session.getAttribute("admin");
         if (admin != null) {
             request.setAttribute("sessionFlag", "admin");
+            return "registersuccess";
         }
 
-        return "registersuccess";
+        return "redirect:/";
     }
 }
