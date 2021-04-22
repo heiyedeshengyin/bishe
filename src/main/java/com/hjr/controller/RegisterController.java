@@ -3,6 +3,7 @@ package com.hjr.controller;
 import com.hjr.been.Admin;
 import com.hjr.been.Class;
 import com.hjr.been.Student;
+import com.hjr.service.AdminService;
 import com.hjr.service.ClassService;
 import com.hjr.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class RegisterController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private AdminService adminService;
+
     @RequestMapping("/student")
     public String student(HttpServletRequest request) {
         List<Class> allClass = classService.findAllClass();
@@ -34,7 +38,10 @@ public class RegisterController {
     }
 
     @RequestMapping("/admin")
-    public String admin() {
+    public String admin(HttpServletRequest request) {
+        List<Class> allClass = classService.findAllClass();
+        request.setAttribute("allClass", allClass);
+
         return "registeradmin";
     }
 
@@ -58,7 +65,32 @@ public class RegisterController {
         student.setStudentClassId(studentClassId);
 
         studentService.insertIntoStudent(student);
+        Integer studentId = studentService.findIdByLoginName(studentLoginName);
+        student.setStudentId(studentId);
         session.setAttribute("student", student);
+        return "redirect:/register/success";
+    }
+
+    @PostMapping("/insertadmin")
+    public String insertadmin(String adminLoginName, String adminPassword, String adminName,
+                              String adminPhone, String adminWechat, String adminQQ,
+                              LocalDate adminBirthday, Integer adminGender, Integer adminClassId, HttpSession session) {
+        Admin admin = new Admin();
+        admin.setAdminLoginName(adminLoginName);
+        admin.setAdminPassword(adminPassword);
+        admin.setAdminName(adminName);
+        admin.setAdminPhone(adminPhone);
+        admin.setAdminWechat(adminWechat);
+        admin.setAdminQQ(adminQQ);
+        admin.setAdminBirthday(adminBirthday);
+        admin.setAdminGender(adminGender);
+        admin.setIsAdminDelete(false);
+        admin.setAdminClassId(adminClassId);
+
+        adminService.insertIntoAdmin(admin);
+        Integer adminId = adminService.findIdByLoginName(adminLoginName);
+        admin.setAdminId(adminId);
+        session.setAttribute("admin", admin);
         return "redirect:/register/success";
     }
 

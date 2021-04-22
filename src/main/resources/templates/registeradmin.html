@@ -9,6 +9,126 @@
 </head>
 
 <body>
+<div class="container">
+    <form method="post" th:action="@{/register/insertadmin}">
+        <div class="row">
+            <div class="col-12 col-md-3 offset-md-4">
+                <h1>管理员注册</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="adminLoginName">管理员登录名</label>
+                    <input type="text" class="form-control" id="adminLoginName" name="adminLoginName">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="adminPassword">管理员登录密码</label>
+                    <input type="password" class="form-control" id="adminPassword" name="adminPassword">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="adminPasswordRepeat">重复密码</label>
+                    <input type="password" class="form-control" id="adminPasswordRepeat">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="adminName">管理员姓名</label>
+                    <input type="text" class="form-control" id="adminName" name="adminName">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="adminPhone">管理员电话</label>
+                    <input type="text" class="form-control" id="adminPhone" name="adminPhone">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="adminWechat">管理员微信</label>
+                    <input type="text" class="form-control" id="adminWechat" name="adminWechat">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="adminQQ">管理员QQ</label>
+                    <input type="text" class="form-control" id="adminQQ" name="adminQQ">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="adminBirthday">管理员生日</label>
+                    <input type="text" class="form-control" id="adminBirthday" name="adminBirthday" aria-describedby="birthdayHelp">
+                    <small id="birthdayHelp" class="form-text text-muted">必须是yyyy-MM-dd格式</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="adminGender">管理员性别</label> <p/>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="adminGender" id="adminGender" value="0">
+                        <label class="form-check-label" for="adminGender">不确定</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="adminGender" id="adminGenderMale" value="1">
+                        <label class="form-check-label" for="adminGenderMale">男</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="adminGender" id="adminGenderFemale" value="2">
+                        <label class="form-check-label" for="adminGenderFemale">女</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="adminClassId">选择管理的班级</label>
+                    <select class="form-control" id="adminClassId" name="adminClassId">
+                        <option selected>请选择...</option>
+                        <option th:each="class : ${allClass}" th:value="${class.classId}" th:text="${class.className}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-2 offset-md-5">
+                <button class="btn btn-primary" type="submit">注册</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
