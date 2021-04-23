@@ -63,7 +63,7 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateStudentInfoModalLabel" th:text="|Update Student ${student.studentName}|">Update Student</h5>
+                    <h5 class="modal-title" id="updateStudentInfoModalLabel" th:text="|修改学生信息 ${student.studentName}|">修改学生信息</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,42 +71,42 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="updateStudentName" class="col-form-label">studentName:</label>
+                        <label for="updateStudentName" class="col-form-label">学生姓名</label>
                         <input type="text" class="form-control" id="updateStudentName" name="studentName" th:value="${student.studentName}">
                     </div>
 
                     <div class="form-group">
-                        <label for="updateStudentPhone" class="col-form-label">studentPhone:</label>
+                        <label for="updateStudentPhone" class="col-form-label">学生电话</label>
                         <input type="text" class="form-control" id="updateStudentPhone" name="studentPhone" th:value="${student.studentPhone}">
                     </div>
 
                     <div class="form-group">
-                        <label for="updateStudentWechat" class="col-form-label">studentWechat:</label>
+                        <label for="updateStudentWechat" class="col-form-label">学生微信</label>
                         <input type="text" class="form-control" id="updateStudentWechat" name="studentWechat" th:value="${student.studentWechat}">
                     </div>
 
                     <div class="form-group">
-                        <label for="updateStudentQQ" class="col-form-label">studentQQ:</label>
+                        <label for="updateStudentQQ" class="col-form-label">学生QQ</label>
                         <input type="text" class="form-control" id="updateStudentQQ" name="studentQQ" th:value="${student.studentQQ}">
                     </div>
 
                     <div class="form-group">
-                        <label for="updateStudentBirthday" class="col-form-label">studentBirthday:</label>
+                        <label for="updateStudentBirthday" class="col-form-label">学生生日</label>
                         <input type="text" class="form-control" id="updateStudentBirthday" name="studentBirthday" th:value="${student.studentBirthday}">
                     </div>
 
                     <div class="form-group">
-                        <label for="updateStudentHeight" class="col-form-label">studentHeight:</label>
+                        <label for="updateStudentHeight" class="col-form-label">学生身高</label>
                         <input type="text" class="form-control" id="updateStudentHeight" name="studentHeight" th:value="${student.studentHeight}">
                     </div>
 
                     <div class="form-group">
-                        <label for="updateStudentWeight" class="col-form-label">studentWeight:</label>
+                        <label for="updateStudentWeight" class="col-form-label">学生体重</label>
                         <input type="text" class="form-control" id="updateStudentWeight" name="studentWeight" th:value="${student.studentWeight}">
                     </div>
 
                     <div class="form-group">
-                        <label for="updateStudentGender" class="col-form-label">studentGender:</label>
+                        <label for="updateStudentGender" class="col-form-label">学生性别</label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="studentGender" id="updateStudentGender" value="0" th:checked="${student.studentGender eq 0}">
                             <label class="form-check-label" for="updateStudentGender">不确定</label>
@@ -123,8 +123,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>
