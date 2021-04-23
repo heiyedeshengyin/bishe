@@ -24,6 +24,7 @@ public class ClassController {
             Integer studentClassId = student.getStudentClassId();
             Class classById = classService.findClassById(studentClassId);
             request.setAttribute("class", classById);
+            request.setAttribute("sessionFlag", "student");
 
             return "classinfo";
         }
@@ -33,6 +34,7 @@ public class ClassController {
             Integer studentClassId = admin.getAdminClassId();
             Class classByid = classService.findClassById(studentClassId);
             request.setAttribute("class", classByid);
+            request.setAttribute("sessionFlag", "admin");
 
             return "classinfo";
         }

@@ -8,11 +8,13 @@
     <title>Class Info</title>
 </head>
 
-<body th:with="student=${#session.getAttribute('student')}">
+<body>
 <div class="alert alert-primary" role="alert">
     班级姓名: [[${class.className}]]
 </div>
 <a class="btn btn-primary" th:href="@{/collegeinfo(id=${class.classCollegeId})}" role="button">查看学院信息</a>
+<a class="btn btn-primary" th:if="${sessionFlag} eq 'student'" th:href="@{/student/info}" role="button">返回学生信息页面</a>
+<a class="btn btn-primary" th:if="${sessionFlag} eq 'admin'" th:href="@{/admin/info}" role="button">返回管理员信息页面</a>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
