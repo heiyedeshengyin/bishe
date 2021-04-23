@@ -20,4 +20,8 @@ public class ClassService {
     public Class findClassById(Integer classId) {
         return classMapper.findClassById(classId);
     }
+
+    public List<Class> findClassByCollegeId(Integer collegeId) {
+        return classMapper.findClassByCollegeId(collegeId);
+    }
 }

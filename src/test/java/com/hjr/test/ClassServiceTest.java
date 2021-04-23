@@ -31,4 +31,13 @@ public class ClassServiceTest {
             System.out.println(aClass);
         }
     }
+
+    @Test
+    @DisplayName("ClassService findClassByCollegeId Test")
+    public void testFindClassByCollegeId() {
+        List<Class> classByCollegeId = classService.findClassByCollegeId(7);
+        for (Class aClass : classByCollegeId) {
+            System.out.println(aClass);
+        }
+    }
 }
