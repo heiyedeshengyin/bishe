@@ -25,12 +25,12 @@ public class StudentService {
 
     public List<Student> findAllStudent() {
         if (studentRedisUtil.hasKey(STUDENT_MAP_REDIS_KEY)) {
-            log.info("Find student in Redis");
+            log.info("Find Student in Redis");
             return studentRedisUtil.getStudentList(STUDENT_MAP_REDIS_KEY);
         }
         else {
             List<Student> studentList = studentMapper.findAllStudent();
-            studentRedisUtil.setStudentListByLoginName(STUDENT_MAP_REDIS_KEY, studentList, Duration.ofMinutes(5));
+            studentRedisUtil.setStudentListByLoginName(STUDENT_MAP_REDIS_KEY, studentList, Duration.ofDays(7));
             log.info("Find Student in Database");
             return studentList;
         }
@@ -41,11 +41,11 @@ public class StudentService {
 
         if (studentRedisUtil.hasKey(STUDENT_MAP_REDIS_KEY)) {
             studentList = studentRedisUtil.getStudentList(STUDENT_MAP_REDIS_KEY);
-            log.info("Find student in Redis");
+            log.info("Find Student in Redis");
         }
         else {
             studentList = studentMapper.findAllStudent();
-            studentRedisUtil.setStudentListByLoginName(STUDENT_MAP_REDIS_KEY, studentList, Duration.ofMinutes(5));
+            studentRedisUtil.setStudentListByLoginName(STUDENT_MAP_REDIS_KEY, studentList, Duration.ofDays(7));
             log.info("Find Student in Database");
         }
 
@@ -57,12 +57,12 @@ public class StudentService {
     public Integer findIdByLoginName(String loginName) {
         if (studentRedisUtil.hasKey(STUDENT_MAP_REDIS_KEY)) {
             Student student = studentRedisUtil.getStudentByLoginName(STUDENT_MAP_REDIS_KEY, loginName);
-            log.info("Find student in Redis");
+            log.info("Find Student in Redis");
             return student.getStudentId();
         }
         else {
             List<Student> studentList = studentMapper.findAllStudent();
-            studentRedisUtil.setStudentListByLoginName(STUDENT_MAP_REDIS_KEY, studentList, Duration.ofMinutes(5));
+            studentRedisUtil.setStudentListByLoginName(STUDENT_MAP_REDIS_KEY, studentList, Duration.ofDays(7));
             List<Student> studentCollect = studentList.stream()
                     .filter(student -> student.getStudentLoginName().equals(loginName))
                     .collect(Collectors.toList());
@@ -74,12 +74,12 @@ public class StudentService {
 
     public Student findStudentByLoginName(String loginName) {
         if (studentRedisUtil.hasKey(STUDENT_MAP_REDIS_KEY)) {
-            log.info("Find student in Redis");
+            log.info("Find Student in Redis");
             return studentRedisUtil.getStudentByLoginName(STUDENT_MAP_REDIS_KEY, loginName);
         }
         else {
             List<Student> studentList = studentMapper.findAllStudent();
-            studentRedisUtil.setStudentListByLoginName(STUDENT_MAP_REDIS_KEY, studentList, Duration.ofMinutes(5));
+            studentRedisUtil.setStudentListByLoginName(STUDENT_MAP_REDIS_KEY, studentList, Duration.ofDays(7));
             List<Student> studentCollect = studentList.stream()
                     .filter(student -> student.getStudentLoginName().equals(loginName))
                     .collect(Collectors.toList());

@@ -36,8 +36,8 @@ public class StudentRedisUtil extends RedisUtil {
 
         Map<String, String> studentMapByLoginName = studentList.stream()
                 .collect(Collectors.toMap(Student::getStudentLoginName, new Function<Student, String>() {
-                    @SneakyThrows
                     @Override
+                    @SneakyThrows(JsonProcessingException.class)
                     public String apply(Student student) {
                         return objectMapper.writeValueAsString(student);
                     }
@@ -54,7 +54,7 @@ public class StudentRedisUtil extends RedisUtil {
         try {
             student = objectMapper.readValue(studentJson, Student.class);
         } catch (JsonProcessingException e) {
-            log.warn("Can not read student object from redis! key: " + key);
+            log.warn("Can not read student object from Redis! key: " + key, e);
         }
 
         return student;
@@ -67,8 +67,8 @@ public class StudentRedisUtil extends RedisUtil {
 
         return studentJsonList.stream()
                 .map(new Function<String, Student>() {
-                    @SneakyThrows
                     @Override
+                    @SneakyThrows(JsonProcessingException.class)
                     public Student apply(String json) {
                         return objectMapper.readValue(json, Student.class);
                     }
