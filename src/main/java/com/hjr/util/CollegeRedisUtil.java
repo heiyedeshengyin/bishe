@@ -2,7 +2,7 @@ package com.hjr.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hjr.been.Class;
+import com.hjr.been.College;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class ClassRedisUtil extends RedisUtil {
+public class CollegeRedisUtil extends RedisUtil {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -26,54 +26,54 @@ public class ClassRedisUtil extends RedisUtil {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public void setClassListById(String key, List<Class> classList, Duration duration) {
-        setClassListById(key, classList);
+    public void setCollegeListById(String key, List<College> collegeList, Duration duration) {
+        setCollegeListById(key, collegeList);
         redisTemplate.expire(key, duration);
     }
 
-    public void setClassListById(String key, List<Class> classList) {
+    public void setCollegeListById(String key, List<College> collegeList) {
         HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
 
-        Map<String, String> classMapById = classList.stream()
-                .collect(Collectors.toMap(clazz -> clazz.getClassId().toString(), new Function<Class, String>() {
+        Map<String, String> collegeMapById = collegeList.stream()
+                .collect(Collectors.toMap(college -> college.getCollegeId().toString(), new Function<College, String>() {
                     @Override
                     @SneakyThrows(JsonProcessingException.class)
-                    public String apply(Class clazz) {
-                        return objectMapper.writeValueAsString(clazz);
+                    public String apply(College college) {
+                        return objectMapper.writeValueAsString(college);
                     }
                 }));
 
-        hashOperations.putAll(key, classMapById);
+        hashOperations.putAll(key, collegeMapById);
     }
 
-    public Class getClassById(String key, Integer classId) {
+    public College getCollegeById(String key, Integer collegeId) {
         HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
 
-        String classJson = hashOperations.get(key, classId.toString());
-        Class clazz = null;
+        String collegeJson = hashOperations.get(key, collegeId.toString());
+        College college = null;
 
-        if (classJson != null && !classJson.isEmpty()) {
+        if (collegeJson != null && !collegeJson.isEmpty()) {
             try {
-                clazz = objectMapper.readValue(classJson, Class.class);
+                college = objectMapper.readValue(collegeJson, College.class);
             } catch (JsonProcessingException e) {
-                log.warn("Can not read class object from Redis! Key: " + key, e);
+                log.warn("Can not read college object from Redis! Key: " + key, e);
             }
         }
 
-        return clazz;
+        return college;
     }
 
-    public List<Class> getClassList(String key) {
+    public List<College> getCollegeList(String key) {
         HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
 
-        List<String> classJsonList = hashOperations.values(key);
+        List<String> collegeJsonList = hashOperations.values(key);
 
-        return classJsonList.stream()
-                .map(new Function<String, Class>() {
+        return collegeJsonList.stream()
+                .map(new Function<String, College>() {
                     @Override
                     @SneakyThrows(JsonProcessingException.class)
-                    public Class apply(String json) {
-                        return objectMapper.readValue(json, Class.class);
+                    public College apply(String json) {
+                        return objectMapper.readValue(json, College.class);
                     }
                 }).collect(Collectors.toList());
     }
