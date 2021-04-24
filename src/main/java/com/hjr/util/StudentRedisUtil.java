@@ -51,10 +51,13 @@ public class StudentRedisUtil extends RedisUtil {
 
         String studentJson = hashOperations.get(key, studentLoginName);
         Student student = null;
-        try {
-            student = objectMapper.readValue(studentJson, Student.class);
-        } catch (JsonProcessingException e) {
-            log.warn("Can not read student object from Redis! key: " + key, e);
+
+        if (studentJson != null && !studentJson.isEmpty()) {
+            try {
+                student = objectMapper.readValue(studentJson, Student.class);
+            } catch (JsonProcessingException e) {
+                log.warn("Can not read student object from Redis! key: " + key, e);
+            }
         }
 
         return student;

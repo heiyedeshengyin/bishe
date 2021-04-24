@@ -51,10 +51,13 @@ public class AdminRedisUtil extends RedisUtil {
 
         String adminJson = hashOperations.get(key, adminLoginName);
         Admin admin = null;
-        try {
-            admin = objectMapper.readValue(adminJson, Admin.class);
-        } catch (JsonProcessingException e) {
-            log.warn("Can not read admin object from Redis! Key: " + key, e);
+
+        if (adminJson != null && !adminJson.isEmpty()) {
+            try {
+                admin = objectMapper.readValue(adminJson, Admin.class);
+            } catch (JsonProcessingException e) {
+                log.warn("Can not read admin object from Redis! Key: " + key, e);
+            }
         }
 
         return admin;
