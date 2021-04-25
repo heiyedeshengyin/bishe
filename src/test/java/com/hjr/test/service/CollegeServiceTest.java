@@ -1,4 +1,4 @@
-package com.hjr.test;
+package com.hjr.test.service;
 
 import com.hjr.been.College;
 import com.hjr.service.CollegeService;

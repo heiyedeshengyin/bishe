@@ -1,4 +1,4 @@
-package com.hjr.test;
+package com.hjr.test.service;
 
 import com.hjr.been.Admin;
 import com.hjr.service.AdminService;
