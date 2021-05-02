@@ -23,8 +23,10 @@
         </tr>
     </tbody>
 </table>
+<a class="btn btn-primary" th:if="${sessionFlag} eq 'student'" th:href="@{/student/download}" role="button">下载签到记录Excel</a>
 <a class="btn btn-primary" th:if="${sessionFlag} eq 'student'" th:href="@{/student}" role="button">返回学生主页</a>
 <a class="btn btn-primary" th:if="${sessionFlag} eq 'admin'" th:href="@{/admin/studentlist}" role="button">返回学生列表</a>
+
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
