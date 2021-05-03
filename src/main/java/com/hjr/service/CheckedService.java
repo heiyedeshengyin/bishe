@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -39,6 +41,34 @@ public class CheckedService {
             }
             log.info("Find Checked in Database, studentId: " + studentId.toString());
             return checkedList;
+        }
+    }
+
+    public List<Checked> findCheckedByStudentIdAndCheckedTime(String checkedDate, Integer studentId) {
+        return checkedMapper.findCheckedByStudentIdAndCheckedTime(checkedDate, studentId);
+    }
+
+    public boolean isCheckedThisDay(LocalDate date, Integer studentId) {
+        if (checkedRedisUtil.hasKey(CHECKED_MAP_REDIS_KEY_PREFIX + studentId.toString())) {
+            List<Checked> checkedList = checkedRedisUtil.getCheckedList(CHECKED_MAP_REDIS_KEY_PREFIX + studentId.toString());
+            for (Checked checked : checkedList) {
+                if (checked.getCheckedTime().toLocalDate().equals(date)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else {
+            String dateString = date.format(DateTimeFormatter.ISO_LOCAL_DATE);
+            List<Checked> checkedList = checkedMapper.findCheckedByStudentIdAndCheckedTime(dateString, studentId);
+
+            if (checkedList != null) {
+                if (checkedList.isEmpty()) {
+                    return false;
+                } else return checkedList.size() == 1;
+            } else {
+                return false;
+            }
         }
     }
 

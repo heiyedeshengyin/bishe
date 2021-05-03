@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @SpringBootTest
@@ -25,6 +27,22 @@ public class CheckedServiceTest {
         for (Checked checked : checkedList) {
             System.out.println(checked);
         }
+    }
+
+    @Test
+    @DisplayName("CheckedService findCheckedByStudentIdAndCheckedTime")
+    public void testFindCheckedByStudentIdAndCheckedTime() {
+        List<Checked> checkedList = checkedService.findCheckedByStudentIdAndCheckedTime("2021-04-20", 2);
+        for (Checked checked : checkedList) {
+            System.out.println(checked);
+        }
+    }
+
+    @Test
+    @DisplayName("CheckedService isCheckedThisDay")
+    public void testIsCheckedThisDay() {
+        boolean checkedThisDay = checkedService.isCheckedThisDay(LocalDate.of(2021, 4, 20), 1);
+        System.out.println(checkedThisDay);
     }
 
     @Test

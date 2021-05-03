@@ -21,7 +21,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -45,7 +47,13 @@ public class AdminController {
     public String studentlist(HttpServletRequest request, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("admin");
         List<Student> studentList = studentService.findStudentByClassId(admin.getAdminClassId());
+        Map<Integer, Boolean> todayCheckedMap = new HashMap<>();
+        for (Student student : studentList) {
+            boolean isTodayChecked = checkedService.isCheckedThisDay(LocalDate.now(), student.getStudentId());
+            todayCheckedMap.put(student.getStudentId(), isTodayChecked);
+        }
         request.setAttribute("studentList", studentList);
+        request.setAttribute("todayCheckedMap", todayCheckedMap);
 
         return "studentlist";
     }
@@ -72,12 +80,33 @@ public class AdminController {
     }
 
     @RequestMapping("/checkedlist")
-    public String checkedlist(HttpServletRequest request, @RequestParam("id") Integer studentId) {
+    public String checkedlist(HttpServletRequest request, @RequestParam("id") Integer studentId, @RequestParam("name") String studentName) {
         List<Checked> checkedList = checkedService.findCheckedByStudentId(studentId);
         request.setAttribute("checkedList", checkedList);
+        request.setAttribute("studentId", studentId);
+        request.setAttribute("studentName", studentName);
         request.setAttribute("sessionFlag", "admin");
 
         return "history";
+    }
+
+    @RequestMapping("/downloadcheckedlist")
+    public void downloadcheckedlist(HttpServletResponse response, @RequestParam("id") Integer studentId, @RequestParam("name") String studentName) {
+        List<Checked> checkedList = checkedService.findCheckedByStudentId(studentId);
+        String fileName = studentName + "-签到记录.xlsx";
+        String headerName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
+        response.setHeader("Content-Disposition", "attachment;filename=" + headerName);
+        XSSFWorkbook workbook = ExcelUtil.checkedListToExcel(checkedList);
+
+        try {
+            ServletOutputStream outputStream = response.getOutputStream();
+            workbook.write(outputStream);
+            outputStream.close();
+            workbook.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping("/info")

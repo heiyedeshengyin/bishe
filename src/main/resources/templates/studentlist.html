@@ -20,6 +20,7 @@
             <th scope="col">学生身高</th>
             <th scope="col">学生体重</th>
             <th scope="col">学生性别</th>
+            <th scope="col">状态</th>
             <th scope="col">操作</th>
         </tr>
     </thead>
@@ -35,13 +36,19 @@
             <td th:case="1">男</td>
             <td th:case="2">女</td>
             <td th:case="*">不确定</td>
+            <td th:if="${todayCheckedMap.get(student.studentId)}">
+                <span class="badge badge-success">今天已签到</span>
+            </td>
+            <td th:unless="${todayCheckedMap.get(student.studentId)}">
+                <span class="badge badge-danger">今天未签到</span>
+            </td>
             <td>
-                <a class="btn btn-primary" th:href="@{/admin/checkedlist(id=${student.studentId})}" role="button">查看签到记录</a>
+                <a class="btn btn-primary" th:href="@{/admin/checkedlist(id=${student.studentId},name=${student.studentName})}" role="button">查看签到记录</a>
             </td>
         </tr>
     </tbody>
 </table>
-<a class="btn btn-primary" th:href="@{/admin/downloadstudentlist}" role="button">下载学生信息Excel</a>
+<a class="btn btn-primary" th:unless="${#lists.isEmpty(studentList)}" th:href="@{/admin/downloadstudentlist}" role="button">下载学生信息Excel</a>
 <a class="btn btn-primary" th:href="@{/admin}" role="button">返回管理员主页</a>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
