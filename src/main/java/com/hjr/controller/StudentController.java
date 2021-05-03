@@ -4,7 +4,7 @@ import com.hjr.been.Checked;
 import com.hjr.been.Student;
 import com.hjr.service.CheckedService;
 import com.hjr.service.StudentService;
-import com.hjr.util.CheckedExcelUtil;
+import com.hjr.util.ExcelUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -81,7 +81,7 @@ public class StudentController {
         String fileName = student.getStudentName() + "-签到记录.xlsx";
         String headerName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
         response.setHeader("Content-Disposition", "attachment;filename=" + headerName);
-        XSSFWorkbook workbook = CheckedExcelUtil.checkedListToExcel(checkedList);
+        XSSFWorkbook workbook = ExcelUtil.checkedListToExcel(checkedList);
 
         try {
             ServletOutputStream outputStream = response.getOutputStream();

@@ -6,14 +6,20 @@ import com.hjr.been.Student;
 import com.hjr.service.AdminService;
 import com.hjr.service.CheckedService;
 import com.hjr.service.StudentService;
+import com.hjr.util.ExcelUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -42,6 +48,27 @@ public class AdminController {
         request.setAttribute("studentList", studentList);
 
         return "studentlist";
+    }
+
+    @RequestMapping("/downloadstudentlist")
+    public void downloadstudentlist(HttpServletResponse response, HttpSession session) {
+        Admin admin = (Admin) session.getAttribute("admin");
+
+        List<Student> studentList = studentService.findStudentByClassId(admin.getAdminClassId());
+        String fileName = admin.getAdminName() + "的学生信息.xlsx";
+        String headerName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
+        response.setHeader("Content-Disposition", "attachment;filename=" + headerName);
+        XSSFWorkbook workbook = ExcelUtil.studentListToExcel(studentList);
+
+        try {
+            ServletOutputStream outputStream = response.getOutputStream();
+            workbook.write(outputStream);
+            outputStream.close();
+            workbook.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping("/checkedlist")
