@@ -76,7 +76,7 @@ public class AdminController {
         String fileName = admin.getAdminName() + "的学生信息.xlsx";
         String headerName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
         response.setHeader("Content-Disposition", "attachment;filename=" + headerName);
-        XSSFWorkbook workbook = ExcelUtil.studentListToExcel(studentList);
+        XSSFWorkbook workbook = ExcelUtil.studentListToExcel(studentList, admin.getAdminName());
 
         try {
             ServletOutputStream outputStream = response.getOutputStream();
