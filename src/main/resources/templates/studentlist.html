@@ -25,7 +25,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr th:each="student : ${studentList}" th:switch="${student.studentGender}">
+        <tr th:each="student : ${studentList}" th:switch="${student.studentGender}" th:with="deltaHours=${todayCheckedMap.get(student.studentId)}">
             <td th:text="${student.studentName}"></td>
             <td th:text="${student.studentPhone}"></td>
             <td th:text="${student.studentWechat}"></td>
@@ -36,11 +36,20 @@
             <td th:case="1">男</td>
             <td th:case="2">女</td>
             <td th:case="*">不确定</td>
-            <td th:if="${todayCheckedMap.get(student.studentId)}">
-                <span class="badge badge-success">今天已签到</span>
+            <td th:if="${deltaHours} eq -1">
+                <span class="badge badge-danger">从未签到</span>
             </td>
-            <td th:unless="${todayCheckedMap.get(student.studentId)}">
-                <span class="badge badge-danger">今天未签到</span>
+            <td th:if="${deltaHours} eq 0">
+                <span class="badge badge-success">刚刚签到</span>
+            </td>
+            <td th:if="${deltaHours} gt 0 and ${deltaHours} lt 24">
+                <span class="badge badge-success" th:text="|${deltaHours}小时前签到|"></span>
+            </td>
+            <td th:if="${deltaHours} ge 24 and ${deltaHours} lt 72">
+                <span class="badge badge-warning" th:text="|${deltaHours / 24}天前签到|"></span>
+            </td>
+            <td th:if="${deltaHours} ge 72">
+                <span class="badge badge-danger" th:text="|${deltaHours / 24}天前签到|"></span>
             </td>
             <td>
                 <a class="btn btn-primary" th:href="@{/admin/checkedlist(id=${student.studentId},name=${student.studentName})}" role="button">查看签到记录</a>

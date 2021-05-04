@@ -7,6 +7,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -23,6 +24,37 @@ public class CheckedRedisUtil extends RedisUtil {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    public void setChecked(String key, Checked checked, Duration duration) {
+        setChecked(key, checked);
+        redisTemplate.expire(key, duration);
+    }
+
+    public void setChecked(String key, Checked checked) {
+        ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
+        String checkedJson = null;
+        try {
+            checkedJson = objectMapper.writeValueAsString(checked);
+            opsForValue.set(key, checkedJson);
+        }
+        catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Checked getChecked(String key) {
+        ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
+        String checkedJson = opsForValue.get(key);
+        Checked checked = null;
+        try {
+            checked = objectMapper.readValue(checkedJson, Checked.class);
+        }
+        catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return checked;
+    }
 
     public void setCheckedListById(String key, List<Checked> checkedList, Duration duration) {
         setCheckedListById(key, checkedList);

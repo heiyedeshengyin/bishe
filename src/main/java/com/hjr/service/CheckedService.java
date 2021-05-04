@@ -17,6 +17,7 @@ import java.util.List;
 public class CheckedService {
 
     private static final String CHECKED_MAP_REDIS_KEY_PREFIX = "checked_map_by_student_id_";
+    private static final String LAST_CHECKED_REDIS_KEY_PREFIX = "last_checked_by_student_id_";
 
     @Autowired
     private CheckedMapper checkedMapper;
@@ -30,7 +31,7 @@ public class CheckedService {
 
     public List<Checked> findCheckedByStudentId(Integer studentId) {
         if (checkedRedisUtil.hasKey(CHECKED_MAP_REDIS_KEY_PREFIX + studentId.toString())) {
-            log.info("Find Checked in Redis, studentId: " + studentId.toString());
+            log.info("Find Checked List in Redis, studentId: " + studentId.toString());
             return checkedRedisUtil.getCheckedList(CHECKED_MAP_REDIS_KEY_PREFIX + studentId.toString());
         }
         else {
@@ -38,14 +39,30 @@ public class CheckedService {
 
             if (checkedList != null && !checkedList.isEmpty()) {
                 checkedRedisUtil.setCheckedListById(CHECKED_MAP_REDIS_KEY_PREFIX + studentId.toString(), checkedList, Duration.ofDays(7));
+                log.info("Find Checked List in Database, studentId: " + studentId.toString());
             }
-            log.info("Find Checked in Database, studentId: " + studentId.toString());
+
             return checkedList;
         }
     }
 
     public List<Checked> findCheckedByStudentIdAndCheckedTime(String checkedDate, Integer studentId) {
         return checkedMapper.findCheckedByStudentIdAndCheckedTime(checkedDate, studentId);
+    }
+
+    public Checked findLastCheckedByStudentId(Integer studentId) {
+        if (checkedRedisUtil.hasKey(LAST_CHECKED_REDIS_KEY_PREFIX + studentId.toString())) {
+            log.info("Find Last Checked in Redis, studentId: " + studentId.toString());
+            return checkedRedisUtil.getChecked(LAST_CHECKED_REDIS_KEY_PREFIX + studentId.toString());
+        }
+        else {
+            Checked checked = checkedMapper.findLastCheckedByStudentId(studentId);
+            if (checked != null) {
+                checkedRedisUtil.setChecked(LAST_CHECKED_REDIS_KEY_PREFIX + studentId.toString(), checked, Duration.ofDays(7));
+                log.info("Find Last Checked in Database, studentId: " + studentId.toString());
+            }
+            return checked;
+        }
     }
 
     public boolean isCheckedThisDay(LocalDate date, Integer studentId) {
@@ -62,18 +79,13 @@ public class CheckedService {
             String dateString = date.format(DateTimeFormatter.ISO_LOCAL_DATE);
             List<Checked> checkedList = checkedMapper.findCheckedByStudentIdAndCheckedTime(dateString, studentId);
 
-            if (checkedList != null) {
-                if (checkedList.isEmpty()) {
-                    return false;
-                } else return checkedList.size() == 1;
-            } else {
-                return false;
-            }
+            return checkedList != null && checkedList.size() == 1;
         }
     }
 
     public void insertChecked(Checked checked) {
         checkedMapper.insertChecked(checked);
         checkedRedisUtil.deleteKey(CHECKED_MAP_REDIS_KEY_PREFIX + checked.getCheckedStudentId().toString());
+        checkedRedisUtil.deleteKey(LAST_CHECKED_REDIS_KEY_PREFIX + checked.getCheckedStudentId().toString());
     }
 }

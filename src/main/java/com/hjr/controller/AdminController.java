@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,10 +49,18 @@ public class AdminController {
     public String studentlist(HttpServletRequest request, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("admin");
         List<Student> studentList = studentService.findStudentByClassId(admin.getAdminClassId());
-        Map<Integer, Boolean> todayCheckedMap = new HashMap<>();
+        Map<Integer, Long> todayCheckedMap = new HashMap<>();
         for (Student student : studentList) {
-            boolean isTodayChecked = checkedService.isCheckedThisDay(LocalDate.now(), student.getStudentId());
-            todayCheckedMap.put(student.getStudentId(), isTodayChecked);
+            Checked lastChecked = checkedService.findLastCheckedByStudentId(student.getStudentId());
+            if (lastChecked != null) {
+                LocalDateTime lastCheckedTime = lastChecked.getCheckedTime();
+                LocalDateTime now = LocalDateTime.now();
+                Duration between = Duration.between(lastCheckedTime, now);
+                todayCheckedMap.put(student.getStudentId(), between.toHours());
+            }
+            else {
+                todayCheckedMap.put(student.getStudentId(), -1L);
+            }
         }
         request.setAttribute("studentList", studentList);
         request.setAttribute("todayCheckedMap", todayCheckedMap);

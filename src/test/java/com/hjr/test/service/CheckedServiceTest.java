@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @SpringBootTest
@@ -36,6 +36,21 @@ public class CheckedServiceTest {
         for (Checked checked : checkedList) {
             System.out.println(checked);
         }
+    }
+
+    @Test
+    @DisplayName("CheckedService findLastCheckedByStudentId")
+    public void testFindLastCheckedByStudentId() {
+        Checked checked = checkedService.findLastCheckedByStudentId(2);
+        System.out.println(checked);
+    }
+
+    @Test
+    public void test() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime of = LocalDateTime.of(2021, 5, 3, 13, 24, 59);
+        Duration between = Duration.between(of, now);
+        System.out.println(between.toDays());
     }
 
     @Test
