@@ -43,13 +43,13 @@
                 <span class="badge badge-success">刚刚签到</span>
             </td>
             <td th:if="${deltaHours} gt 0 and ${deltaHours} lt 24">
-                <span class="badge badge-success" th:text="|${deltaHours}小时前签到|"></span>
+                <span class="badge badge-success" th:text="|${deltaHours}小时前签到|" th:title="${checkedTimeFormat}"></span>
             </td>
             <td th:if="${deltaHours} ge 24 and ${deltaHours} lt 72">
-                <span class="badge badge-warning" th:text="|${deltaHours / 24}天前签到|"></span>
+                <span class="badge badge-warning" th:text="|${deltaHours / 24}天前签到|" th:title="${checkedTimeFormat}"></span>
             </td>
             <td th:if="${deltaHours} ge 72">
-                <span class="badge badge-danger" th:text="|${deltaHours / 24}天前签到|"></span>
+                <span class="badge badge-danger" th:text="|${deltaHours / 24}天前签到|" th:title="${checkedTimeFormat}"></span>
             </td>
             <td>
                 <a class="btn btn-primary" th:href="@{/admin/checkedlist(id=${student.studentId},name=${student.studentName})}" role="button">查看签到记录</a>

@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,9 @@ public class AdminController {
                 LocalDateTime now = LocalDateTime.now();
                 Duration between = Duration.between(lastCheckedTime, now);
                 todayCheckedMap.put(student.getStudentId(), between.toHours());
+
+                String checkedTimeFormat = lastChecked.getCheckedTime().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 mm:HH:ss"));
+                request.setAttribute("checkedTimeFormat", checkedTimeFormat);
             }
             else {
                 todayCheckedMap.put(student.getStudentId(), -1L);
