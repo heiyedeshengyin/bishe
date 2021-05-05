@@ -16,22 +16,89 @@ public class ExcelUtil {
 
     private ExcelUtil() {}
 
-    public static XSSFWorkbook checkedListToExcel(List<Checked> checkedList) {
+    public static XSSFWorkbook checkedListToExcel(List<Checked> checkedList, String studentName) {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("checkedList");
         sheet.setColumnWidth(0, 22 * 256);
         sheet.setColumnWidth(1, 10 * 256);
+        sheet.setColumnWidth(2, 22 * 256);
 
-        XSSFRow headerRow = sheet.createRow(0);
-        headerRow.createCell(0).setCellValue("签到时间");
-        headerRow.createCell(1).setCellValue("签到体温");
+        XSSFRow titleRow = sheet.createRow(0);
+        XSSFCell titleCell = titleRow.createCell(0);
+        titleCell.setCellValue(studentName + "的签到记录");
+
+        XSSFCellStyle titleStyle = workbook.createCellStyle();
+        titleStyle.setAlignment(HorizontalAlignment.CENTER);
+        titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        XSSFFont titleFont = workbook.createFont();
+        titleFont.setFontName("等线");
+        titleFont.setBold(true);
+        titleFont.setFontHeightInPoints((short) 16);
+        titleFont.setColor(new XSSFColor(new byte[]{(byte) 68, (byte) 114, (byte) 196}, new DefaultIndexedColorMap()));
+
+        titleStyle.setFont(titleFont);
+        titleCell.setCellStyle(titleStyle);
+
+        CellRangeAddress titleCellAddresses = new CellRangeAddress(0, 0, 0, 1);
+        sheet.addMergedRegion(titleCellAddresses);
+
+        XSSFRow headerRow = sheet.createRow(1);
+        XSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        headerStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 169, (byte) 208, (byte) 142}, new DefaultIndexedColorMap()));
+
+        XSSFCell checkedTimeHeaderCell = headerRow.createCell(0);
+        checkedTimeHeaderCell.setCellValue("签到时间");
+        checkedTimeHeaderCell.setCellStyle(headerStyle);
+
+        XSSFCell checkedTemperatureHeaderCell = headerRow.createCell(1);
+        checkedTemperatureHeaderCell.setCellValue("签到体温");
+        checkedTemperatureHeaderCell.setCellStyle(headerStyle);
+
+        XSSFCellStyle oddValueStyle = workbook.createCellStyle();
+        oddValueStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        oddValueStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 208, (byte) 206, (byte) 206}, new DefaultIndexedColorMap()));
+
+        XSSFCellStyle evenValueStyle = workbook.createCellStyle();
+        evenValueStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        evenValueStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 226, (byte) 239, (byte) 218}, new DefaultIndexedColorMap()));
 
         for (int i = 0; i < checkedList.size(); i++) {
-            XSSFRow row = sheet.createRow(i + 1);
+            XSSFRow row = sheet.createRow(i + 2);
             Checked checked = checkedList.get(i);
-            row.createCell(0).setCellValue(checked.getCheckedTime().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss")));
-            row.createCell(1).setCellValue(checked.getCheckedTemperature() + "摄氏度");
+
+            XSSFCell checkedTimeValueCell = row.createCell(0);
+            checkedTimeValueCell.setCellValue(checked.getCheckedTime().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss")));
+
+            XSSFCell checkedTemperatureValueCell = row.createCell(1);
+            checkedTemperatureValueCell.setCellValue(checked.getCheckedTemperature() + "摄氏度");
+
+            if ((i + 1) % 2 == 1) {
+                checkedTimeValueCell.setCellStyle(oddValueStyle);
+                checkedTemperatureValueCell.setCellStyle(oddValueStyle);
+            }
+            else {
+                checkedTimeValueCell.setCellStyle(evenValueStyle);
+                checkedTemperatureValueCell.setCellStyle(evenValueStyle);
+            }
         }
+
+        XSSFCellStyle generationTimeHeaderStyle = workbook.createCellStyle();
+        generationTimeHeaderStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        generationTimeHeaderStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 244, (byte) 176, (byte) 132}, new DefaultIndexedColorMap()));
+
+        XSSFCell generationTimeHeaderCell = headerRow.createCell(2);
+        generationTimeHeaderCell.setCellValue("生成时间");
+        generationTimeHeaderCell.setCellStyle(generationTimeHeaderStyle);
+
+        XSSFCellStyle generationTimeValueStyle = workbook.createCellStyle();
+        generationTimeValueStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        generationTimeValueStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 252, (byte) 228, (byte) 214}, new DefaultIndexedColorMap()));
+
+        XSSFCell generationTimeValueCell = sheet.getRow(2).createCell(2);
+        generationTimeValueCell.setCellValue(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss")));
+        generationTimeValueCell.setCellStyle(generationTimeValueStyle);
 
         return workbook;
     }

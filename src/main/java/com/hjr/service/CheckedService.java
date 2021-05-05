@@ -38,7 +38,7 @@ public class CheckedService {
             List<Checked> checkedList = checkedMapper.findCheckedByStudentId(studentId);
 
             if (checkedList != null && !checkedList.isEmpty()) {
-                checkedRedisUtil.setCheckedListById(CHECKED_MAP_REDIS_KEY_PREFIX + studentId.toString(), checkedList, Duration.ofDays(7));
+                checkedRedisUtil.setCheckedListById(CHECKED_MAP_REDIS_KEY_PREFIX + studentId.toString(), checkedList, Duration.ofDays(1));
                 log.info("Find Checked List in Database, studentId: " + studentId.toString());
             }
 
@@ -58,7 +58,7 @@ public class CheckedService {
         else {
             Checked checked = checkedMapper.findLastCheckedByStudentId(studentId);
             if (checked != null) {
-                checkedRedisUtil.setChecked(LAST_CHECKED_REDIS_KEY_PREFIX + studentId.toString(), checked, Duration.ofDays(7));
+                checkedRedisUtil.setChecked(LAST_CHECKED_REDIS_KEY_PREFIX + studentId.toString(), checked, Duration.ofDays(1));
                 log.info("Find Last Checked in Database, studentId: " + studentId.toString());
             }
             return checked;

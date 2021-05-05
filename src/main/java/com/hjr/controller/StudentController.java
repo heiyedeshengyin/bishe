@@ -81,7 +81,7 @@ public class StudentController {
         String fileName = student.getStudentName() + "-签到记录.xlsx";
         String headerName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
         response.setHeader("Content-Disposition", "attachment;filename=" + headerName);
-        XSSFWorkbook workbook = ExcelUtil.checkedListToExcel(checkedList);
+        XSSFWorkbook workbook = ExcelUtil.checkedListToExcel(checkedList, student.getStudentName());
 
         try {
             ServletOutputStream outputStream = response.getOutputStream();
