@@ -36,7 +36,8 @@ public class ProvinceRedisUtil extends RedisUtil {
         HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
 
         Map<String, String> provinceMapById = provinceList.stream()
-                .collect(Collectors.toMap(province -> province.getProvinceId().toString(), new Function<Province, String>() {
+                .collect(Collectors.toMap(province -> province.getProvinceId().toString(),
+                        new Function<Province, String>() {
                     @Override
                     @SneakyThrows(JsonProcessingException.class)
                     public String apply(Province province) {
