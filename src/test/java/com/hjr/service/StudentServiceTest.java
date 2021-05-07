@@ -1,7 +1,6 @@
-package com.hjr.test.service;
+package com.hjr.service;
 
 import com.hjr.been.Student;
-import com.hjr.service.StudentService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

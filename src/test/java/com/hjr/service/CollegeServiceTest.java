@@ -1,7 +1,6 @@
-package com.hjr.test.service;
+package com.hjr.service;
 
 import com.hjr.been.College;
-import com.hjr.service.CollegeService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

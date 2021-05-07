@@ -1,8 +1,7 @@
-package com.hjr.test.util;
+package com.hjr.util;
 
 import com.hjr.been.College;
 import com.hjr.mapper.CollegeMapper;
-import com.hjr.util.CollegeRedisUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

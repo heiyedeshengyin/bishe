@@ -1,8 +1,7 @@
-package com.hjr.test.util;
+package com.hjr.util;
 
 import com.hjr.been.Checked;
 import com.hjr.mapper.CheckedMapper;
-import com.hjr.util.CheckedRedisUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

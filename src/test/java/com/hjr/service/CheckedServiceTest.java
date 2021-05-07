@@ -1,7 +1,6 @@
-package com.hjr.test.service;
+package com.hjr.service;
 
 import com.hjr.been.Checked;
-import com.hjr.service.CheckedService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,7 @@ public class CheckedServiceTest {
     }
 
     @Test
-    @DisplayName("CheckedService findCheckedByStudentIdAndCheckedTime")
+    @DisplayName("CheckedService findCheckedByStudentIdAndCheckedTime Test")
     public void testFindCheckedByStudentIdAndCheckedTime() {
         List<Checked> checkedList = checkedService.findCheckedByStudentIdAndCheckedTime("2021-04-20", 2);
         for (Checked checked : checkedList) {
@@ -39,7 +38,7 @@ public class CheckedServiceTest {
     }
 
     @Test
-    @DisplayName("CheckedService findLastCheckedByStudentId")
+    @DisplayName("CheckedService findLastCheckedByStudentId Test")
     public void testFindLastCheckedByStudentId() {
         Checked checked = checkedService.findLastCheckedByStudentId(2);
         System.out.println(checked);
@@ -54,7 +53,7 @@ public class CheckedServiceTest {
     }
 
     @Test
-    @DisplayName("CheckedService isCheckedThisDay")
+    @DisplayName("CheckedService isCheckedThisDay Test")
     public void testIsCheckedThisDay() {
         boolean checkedThisDay = checkedService.isCheckedThisDay(LocalDate.of(2021, 4, 20), 1);
         System.out.println(checkedThisDay);

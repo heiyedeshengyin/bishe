@@ -1,8 +1,7 @@
-package com.hjr.test.util;
+package com.hjr.util;
 
 import com.hjr.been.Admin;
 import com.hjr.mapper.AdminMapper;
-import com.hjr.util.AdminRedisUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
