@@ -23,7 +23,9 @@ public class StudentServiceTest {
     public void testFindAllStudent() {
         List<Student> studentList = studentService.findAllStudent();
 
-        System.out.println(studentList);
+        for (Student student : studentList) {
+            System.out.println(student);
+        }
     }
 
     @Test
