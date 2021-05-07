@@ -23,4 +23,11 @@ public class CityServiceTest {
             System.out.println(city);
         }
     }
+
+    @Test
+    @DisplayName("CityService findCityById Test")
+    public void testFindCityById() {
+        City city = cityService.findCityById(420100);
+        System.out.println(city);
+    }
 }

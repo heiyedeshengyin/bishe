@@ -36,7 +36,7 @@ public class CityService {
     }
 
     public City findCityById(Integer cityId) {
-        int provinceId = cityId / 10000;
+        int provinceId = (cityId / 10000) * 10000;
 
         if (cityRedisUtil.hasKey(CITY_MAP_REDIS_KEY_PREFIX + Integer.toString(provinceId))) {
             log.info("Find City in Redis, cityId: " + cityId.toString());
@@ -55,7 +55,7 @@ public class CityService {
                 return null;
             }
             else {
-                log.info("Find City in Database. cityId: " + cityId.toString());
+                log.info("Find City in Database, cityId: " + cityId.toString());
                 return cityCollect.get(0);
             }
         }

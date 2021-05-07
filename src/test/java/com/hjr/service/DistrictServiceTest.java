@@ -23,4 +23,11 @@ public class DistrictServiceTest {
             System.out.println(district);
         }
     }
+
+    @Test
+    @DisplayName("DistrictService findDistrictById Test")
+    public void testFindDistrictById() {
+        District district = districtService.findDistrictById(420112);
+        System.out.println(district);
+    }
 }
