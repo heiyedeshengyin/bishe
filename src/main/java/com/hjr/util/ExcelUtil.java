@@ -17,20 +17,28 @@ public class ExcelUtil {
     private ExcelUtil() {}
 
     public static XSSFWorkbook checkedListToExcel(List<Checked> checkedList, String studentName) {
+        //创建Excel文件
         XSSFWorkbook workbook = new XSSFWorkbook();
+
+        //创建一个工作簿
         XSSFSheet sheet = workbook.createSheet("checkedList");
+
+        //设置每一列的宽度
         sheet.setColumnWidth(0, 22 * 256);
         sheet.setColumnWidth(1, 10 * 256);
         sheet.setColumnWidth(2, 22 * 256);
 
+        //创建标题行
         XSSFRow titleRow = sheet.createRow(0);
         XSSFCell titleCell = titleRow.createCell(0);
         titleCell.setCellValue(studentName + "的签到记录");
 
+        //设置标题居中
         XSSFCellStyle titleStyle = workbook.createCellStyle();
         titleStyle.setAlignment(HorizontalAlignment.CENTER);
         titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
+        //设置标题的字体
         XSSFFont titleFont = workbook.createFont();
         titleFont.setFontName("等线");
         titleFont.setBold(true);
@@ -40,14 +48,17 @@ public class ExcelUtil {
         titleStyle.setFont(titleFont);
         titleCell.setCellStyle(titleStyle);
 
+        //合并标题的单元格
         CellRangeAddress titleCellAddresses = new CellRangeAddress(0, 0, 0, 1);
         sheet.addMergedRegion(titleCellAddresses);
 
+        //创建表头行
         XSSFRow headerRow = sheet.createRow(1);
         XSSFCellStyle headerStyle = workbook.createCellStyle();
         headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         headerStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 169, (byte) 208, (byte) 142}, new DefaultIndexedColorMap()));
 
+        //设置表头行每一格的内容
         XSSFCell checkedTimeHeaderCell = headerRow.createCell(0);
         checkedTimeHeaderCell.setCellValue("签到时间");
         checkedTimeHeaderCell.setCellStyle(headerStyle);
@@ -56,6 +67,7 @@ public class ExcelUtil {
         checkedTemperatureHeaderCell.setCellValue("签到体温");
         checkedTemperatureHeaderCell.setCellStyle(headerStyle);
 
+        //创建表体行的两种样式
         XSSFCellStyle oddValueStyle = workbook.createCellStyle();
         oddValueStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         oddValueStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 208, (byte) 206, (byte) 206}, new DefaultIndexedColorMap()));
@@ -64,6 +76,7 @@ public class ExcelUtil {
         evenValueStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         evenValueStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 226, (byte) 239, (byte) 218}, new DefaultIndexedColorMap()));
 
+        //设置表体的内容
         for (int i = 0; i < checkedList.size(); i++) {
             XSSFRow row = sheet.createRow(i + 2);
             Checked checked = checkedList.get(i);
@@ -84,6 +97,7 @@ public class ExcelUtil {
             }
         }
 
+        //设置文档生成时间
         XSSFCellStyle generationTimeHeaderStyle = workbook.createCellStyle();
         generationTimeHeaderStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         generationTimeHeaderStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 244, (byte) 176, (byte) 132}, new DefaultIndexedColorMap()));

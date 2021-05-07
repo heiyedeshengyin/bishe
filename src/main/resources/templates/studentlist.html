@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<table class="table">
+<table class="table" th:unless="${#lists.isEmpty(studentList)}">
     <thead>
         <tr>
             <th scope="col">学生姓名</th>
@@ -59,6 +59,9 @@
 </table>
 <a class="btn btn-primary" th:unless="${#lists.isEmpty(studentList)}" th:href="@{/admin/downloadstudentlist}" role="button">下载学生信息Excel</a>
 <a class="btn btn-primary" th:href="@{/admin}" role="button">返回管理员主页</a>
+<h5 th:unless="${#lists.isEmpty(studentList)}" th:if="${todayCheckedNum ne 0}">总共[[${studentNum}]]名学生，已有[[${todayCheckedNum}]]名学生今天已签到</h5>
+<h5 th:unless="${#lists.isEmpty(studentList)}" th:if="${todayCheckedNum eq 0}">总共[[${studentNum}]]名学生，今天暂无学生签到</h5>
+<h5 th:if="${#lists.isEmpty(studentList)}">你管理的班级下暂时无学生</h5>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>

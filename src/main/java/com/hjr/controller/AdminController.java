@@ -27,6 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 @Controller
 @RequestMapping("/admin")
@@ -51,13 +52,19 @@ public class AdminController {
         Admin admin = (Admin) session.getAttribute("admin");
         List<Student> studentList = studentService.findStudentByClassId(admin.getAdminClassId());
         Map<Integer, Long> todayCheckedMap = new HashMap<>();
+
+        int todayCheckedNum = 0;
         for (Student student : studentList) {
             Checked lastChecked = checkedService.findLastCheckedByStudentId(student.getStudentId());
             if (lastChecked != null) {
                 LocalDateTime lastCheckedTime = lastChecked.getCheckedTime();
                 LocalDateTime now = LocalDateTime.now();
                 Duration between = Duration.between(lastCheckedTime, now);
-                todayCheckedMap.put(student.getStudentId(), between.toHours());
+                long deltaHours = between.toHours();
+                todayCheckedMap.put(student.getStudentId(), deltaHours);
+                if (deltaHours < 24L && deltaHours >= 0L) {
+                    todayCheckedNum++;
+                }
 
                 String checkedTimeFormat = lastChecked.getCheckedTime().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 mm:HH:ss"));
                 request.setAttribute("checkedTimeFormat", checkedTimeFormat);
@@ -68,6 +75,8 @@ public class AdminController {
         }
         request.setAttribute("studentList", studentList);
         request.setAttribute("todayCheckedMap", todayCheckedMap);
+        request.setAttribute("studentNum", studentList.size());
+        request.setAttribute("todayCheckedNum", todayCheckedNum);
 
         return "studentlist";
     }
