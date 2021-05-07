@@ -55,7 +55,8 @@ public class AdminRedisUtil extends RedisUtil {
         if (adminJson != null && !adminJson.isEmpty()) {
             try {
                 admin = objectMapper.readValue(adminJson, Admin.class);
-            } catch (JsonProcessingException e) {
+            }
+            catch (JsonProcessingException e) {
                 log.warn("Can not read admin object from Redis! Key: " + key, e);
             }
         }

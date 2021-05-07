@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -75,6 +76,8 @@ public class ClassRedisUtil extends RedisUtil {
                     public Class apply(String json) {
                         return objectMapper.readValue(json, Class.class);
                     }
-                }).collect(Collectors.toList());
+                })
+                .sorted(Comparator.comparingInt(Class::getClassId))
+                .collect(Collectors.toList());
     }
 }

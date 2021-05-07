@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -88,6 +89,8 @@ public class CheckedRedisUtil extends RedisUtil {
                     public Checked apply(String json) {
                         return objectMapper.readValue(json, Checked.class);
                     }
-                }).collect(Collectors.toList());
+                })
+                .sorted(Comparator.comparing(Checked::getCheckedTime))
+                .collect(Collectors.toList());
     }
 }
