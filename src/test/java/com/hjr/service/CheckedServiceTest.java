@@ -66,7 +66,10 @@ public class CheckedServiceTest {
         Checked checked = new Checked();
         checked.setCheckedId(0);
         checked.setCheckedTime(LocalDateTime.now());
+        checked.setCheckedIsFever(false);
+        checked.setCheckedIsContact(false);
         checked.setCheckedTemperature("36.8");
+        checked.setCheckedDistrictId(420112);
         checked.setIsCheckedDelete(false);
         checked.setCheckedStudentId(2);
 

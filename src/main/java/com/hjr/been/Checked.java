@@ -9,7 +9,10 @@ public class Checked {
     private Integer checkedId;
 
     private LocalDateTime checkedTime;
+    private Boolean checkedIsFever;
+    private Boolean checkedIsContact;
     private String checkedTemperature;
+    private Integer checkedDistrictId;
 
     private Boolean isCheckedDelete;
     private Integer checkedStudentId;

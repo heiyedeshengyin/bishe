@@ -5,6 +5,7 @@ import com.hjr.been.Checked;
 import com.hjr.been.Student;
 import com.hjr.service.AdminService;
 import com.hjr.service.CheckedService;
+import com.hjr.service.DistrictService;
 import com.hjr.service.StudentService;
 import com.hjr.util.ExcelUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -27,6 +28,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -40,6 +42,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private DistrictService districtService;
 
     @RequestMapping
     public String admin() {
@@ -104,7 +109,16 @@ public class AdminController {
     @RequestMapping("/checkedlist")
     public String checkedlist(HttpServletRequest request, @RequestParam("id") Integer studentId, @RequestParam("name") String studentName) {
         List<Checked> checkedList = checkedService.findCheckedByStudentId(studentId);
+        List<String> checkedTimeFormatList = checkedList.stream()
+                .map(checked -> checked.getCheckedTime().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss")))
+                .collect(Collectors.toList());
+        List<String> checkedLocateStringList = checkedList.stream()
+                .map(checked -> districtService.districtToString(checked.getCheckedDistrictId()))
+                .collect(Collectors.toList());
+
         request.setAttribute("checkedList", checkedList);
+        request.setAttribute("checkedTimeFormatList", checkedTimeFormatList);
+        request.setAttribute("checkedLocateStringList", checkedLocateStringList);
         request.setAttribute("studentId", studentId);
         request.setAttribute("studentName", studentName);
         request.setAttribute("sessionFlag", "admin");

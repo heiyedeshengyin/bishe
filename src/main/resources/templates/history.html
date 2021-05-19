@@ -13,13 +13,25 @@
     <thead>
         <tr>
             <th scope="col">签到时间</th>
+            <th scope="col">当天健康状况</th>
+            <th scope="col">当天是否接触新冠患者</th>
             <th scope="col">体温</th>
+            <th scope="col">当天签到地</th>
         </tr>
     </thead>
     <tbody>
-        <tr th:each="checked : ${checkedList}">
-            <td th:text="${checked.checkedTime}"></td>
+        <tr th:each="checked, stat : ${checkedList}">
+            <td th:text="${checkedTimeFormatList.get(stat.index)}"></td>
+
+            <td th:if="${checked.checkedIsFever}">有发烧咳嗽症状</td>
+            <td th:unless="${checked.checkedIsFever}">健康</td>
+
+            <td th:if="${checked.checkedIsContact}">是</td>
+            <td th:unless="${checked.checkedIsContact}">否</td>
+
             <td th:text="${checked.checkedTemperature}"></td>
+
+            <td th:text="${checkedLocateStringList.get(stat.index)}"></td>
         </tr>
     </tbody>
 </table>

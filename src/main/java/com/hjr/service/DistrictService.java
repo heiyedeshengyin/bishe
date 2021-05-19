@@ -1,6 +1,8 @@
 package com.hjr.service;
 
+import com.hjr.been.City;
 import com.hjr.been.District;
+import com.hjr.been.Province;
 import com.hjr.mapper.DistrictMapper;
 import com.hjr.util.DistrictRedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,12 @@ public class DistrictService {
 
     @Autowired
     private DistrictRedisUtil districtRedisUtil;
+
+    @Autowired
+    private ProvinceService provinceService;
+
+    @Autowired
+    private CityService cityService;
 
     public List<District> findDistrictByCityId(Integer cityId) {
         if (districtRedisUtil.hasKey(DISTRICT_MAP_REDIS_KEY_PREFIX + cityId.toString())) {
@@ -59,5 +67,16 @@ public class DistrictService {
                 return districtCollect.get(0);
             }
         }
+    }
+
+    public String districtToString(Integer districtId) {
+        int cityId = (districtId / 100) * 100;
+        int provinceId = (districtId / 10000) * 10000;
+
+        District district = findDistrictById(districtId);
+        City city = cityService.findCityById(cityId);
+        Province province = provinceService.findProvinceById(provinceId);
+
+        return province.getProvinceName() + " " + city.getCityName() + " " + district.getDistrictName();
     }
 }

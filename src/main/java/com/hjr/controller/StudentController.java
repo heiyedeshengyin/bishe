@@ -1,8 +1,11 @@
 package com.hjr.controller;
 
 import com.hjr.been.Checked;
+import com.hjr.been.Province;
 import com.hjr.been.Student;
 import com.hjr.service.CheckedService;
+import com.hjr.service.DistrictService;
+import com.hjr.service.ProvinceService;
 import com.hjr.service.StudentService;
 import com.hjr.util.ExcelUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -19,7 +22,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/student")
@@ -31,24 +37,37 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private ProvinceService provinceService;
+
+    @Autowired
+    private DistrictService districtService;
+
     @RequestMapping
     public String student() {
         return "student";
     }
 
     @RequestMapping("/checked")
-    public String checked() {
+    public String checked(HttpServletRequest request) {
+        List<Province> provinceList = provinceService.findAllProvince();
+        request.setAttribute("provinceList", provinceList);
+
         return "check";
     }
 
     @PostMapping("/check")
-    public String check(String temperature, HttpSession session) {
+    public String check(Integer checkedIsFever, Integer checkedIsContact, String checkedTemperature,
+                        Integer checkedDistrictId, HttpSession session) {
         Student student = (Student) session.getAttribute("student");
 
         Checked checked = new Checked();
         checked.setCheckedId(0);
         checked.setCheckedTime(LocalDateTime.now());
-        checked.setCheckedTemperature(temperature);
+        checked.setCheckedIsFever(checkedIsFever != 0);
+        checked.setCheckedIsContact(checkedIsContact != 0);
+        checked.setCheckedTemperature(checkedTemperature);
+        checked.setCheckedDistrictId(checkedDistrictId);
         checked.setIsCheckedDelete(false);
         checked.setCheckedStudentId(student.getStudentId());
 
@@ -67,7 +86,16 @@ public class StudentController {
         Student student = (Student) session.getAttribute("student");
 
         List<Checked> checkedList = checkedService.findCheckedByStudentId(student.getStudentId());
+        List<String> checkedTimeFormatList = checkedList.stream()
+                .map(checked -> checked.getCheckedTime().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss")))
+                .collect(Collectors.toList());
+        List<String> checkedLocateStringList = checkedList.stream()
+                .map(checked -> districtService.districtToString(checked.getCheckedDistrictId()))
+                .collect(Collectors.toList());
+
         request.setAttribute("checkedList", checkedList);
+        request.setAttribute("checkedTimeFormatList", checkedTimeFormatList);
+        request.setAttribute("checkedLocateStringList", checkedLocateStringList);
         request.setAttribute("sessionFlag", "student");
 
         return "history";

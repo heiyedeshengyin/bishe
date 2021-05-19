@@ -9,16 +9,134 @@
 </head>
 
 <body>
-<form method="post" th:action="@{/student/check}">
-    <div class="form-group">
-        <label for="temperatureInput">Temperature</label>
-        <input type="text" class="form-control" id="temperatureInput" name="temperature">
-    </div>
-    <button type="submit" class="btn btn-primary">签到</button>
-</form>
-<a class="btn btn-primary" th:href="@{/student}" role="button">返回学生主页</a>
+<div class="container">
+    <form method="post" th:action="@{/student/check}">
+        <div class="row">
+            <div class="col-12 col-md-3 offset-md-4">
+                <h1>签到</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="checkedIsFever0">目前健康状况</label> <p></p>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="checkedIsFever" id="checkedIsFever0" value="0">
+                        <label class="form-check-label" for="checkedIsFever0">健康</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="checkedIsFever" id="checkedIsFever1" value="1">
+                        <label class="form-check-label" for="checkedIsFever1">有发烧咳嗽症状</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="checkedIsContact0">是否接触过疑似或确诊的新冠患者</label> <p></p>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="checkedIsContact" id="checkedIsContact0" value="0">
+                        <label class="form-check-label" for="checkedIsContact0">否</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="checkedIsContact" id="checkedIsContact1" value="1">
+                        <label class="form-check-label" for="checkedIsContact1">是</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="checkedTemperature">体温</label>
+                    <input type="text" class="form-control" id="checkedTemperature" name="checkedTemperature">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="checkedProvinceId">选择目前所在的省份</label>
+                    <select class="form-control" id="checkedProvinceId">
+                        <option value="0" selected>请选择...</option>
+                        <option th:each="province : ${provinceList}" th:value="${province.provinceId}" th:text="${province.provinceName}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="checkedCityId">选择目前所在的城市</label>
+                    <select class="form-control" id="checkedCityId">
+                        <option value="0" selected>请选择...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+                <div class="form-group">
+                    <label for="checkedDistrictId">选择目前所在的地区</label>
+                    <select class="form-control" id="checkedDistrictId" name="checkedDistrictId">
+                        <option value="0" selected>请选择...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-2 offset-md-5">
+                <button class="btn btn-primary" type="submit">签到</button>
+            </div>
+        </div>
+
+    </form>
+    <a class="btn btn-primary" th:href="@{/student}" role="button">返回学生主页</a>
+</div>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script>
+    $("#checkedProvinceId").change(function () {
+        var optionProvince = $("#checkedProvinceId option:selected");
+        var val = optionProvince.val();
+        var selectCity = $("#checkedCityId");
+        var selectDistrict = $("#checkedDistrictId");
+        selectDistrict.empty();
+        selectDistrict.append("<option value='0' selected>请选择...</option>");
+        selectCity.empty();
+        selectCity.append("<option value='0' selected>请选择...</option>");
+        if (val !== "0") {
+            $.post("http://localhost:8080/locate/city", {provinceid: val}, function (data, status) {
+                data.forEach((item, index, array) => {
+                    selectCity.append("<option value='" + item.cityId +"'>" + item.cityName + "</option>");
+                });
+            });
+        }
+    });
+
+    $("#checkedCityId").change(function () {
+        var optionDistrict = $("#checkedCityId option:selected");
+        var val = optionDistrict.val();
+        var selectDistrict = $("#checkedDistrictId");
+        selectDistrict.empty();
+        selectDistrict.append("<option value='0' selected>请选择...</option>");
+        if (val !== "0") {
+            $.post("http://localhost:8080/locate/district", {cityid: val}, function (data, status) {
+                data.forEach((item, index, array) => {
+                    selectDistrict.append("<option value='" + item.districtId + "'>" + item.districtName + "</option>");
+                });
+            });
+        }
+    });
+</script>
 </body>
 </html>
