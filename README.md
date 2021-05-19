@@ -9,7 +9,7 @@
 
 ### 使用方法
 首先，下载并安装MySQL数据库，Redis，JDK1.8和Maven  
-MySQL中创建bishe数据库，然后在该数据库中创建以下五张表  
+MySQL中创建bishe数据库，然后在该数据库中创建以下八张表  
 在/src/main/resources/application-env.yaml配置MySQL数据库和Redis  
 然后使用IDEA或Eclipse以Maven项目方式打开代码文件夹  
 项目创建好后，等待Maven下载依赖，下载完成后，来到com.hjr.BisheApplication类下启动
@@ -74,9 +74,41 @@ create table admin (
 create table checked (
     checked_id int primary key auto_increment,
     checked_time datetime,
+    checked_is_fever bool,
+    checked_is_contact bool,
     checked_temperature varchar(64),
+    checked_district_id int,
+    constraint checked_district_fk foreign key (checked_district_id) references district(district_id),
     is_checked_delete bool not null default false,
     checked_student_id int,
     constraint checked_student_fk foreign key (checked_student_id) references student(student_id)
+);
+```
+
+#### 省份表
+```mysql
+create table province (
+    province_id int primary key,
+    province_name varchar(32)
+);
+```
+
+#### 城市表
+```mysql
+create table city (
+    city_id int primary key,
+    city_name varchar(32),
+    city_province_id int,
+    constraint city_province_fk foreign key (city_province_id) references province(province_id)
+);
+```
+
+#### 地区表
+```mysql
+create table district (
+    district_id int primary key,
+    district_name varchar(32),
+    district_city_id int,
+    constraint district_city_fk foreign key (district_city_id) references city(city_id)
 );
 ```
