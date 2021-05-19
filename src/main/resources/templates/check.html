@@ -104,7 +104,10 @@
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<script>
+<script th:inline="javascript">
+    const cityUrl = /*[[@{/locate/city}]]*/ "http://localhost:8080/locate/city";
+    const districtUrl = /*[[@{/locate/district}]]*/ "http://localhost:8080/locate/district";
+
     $("#checkedProvinceId").change(function () {
         var optionProvince = $("#checkedProvinceId option:selected");
         var val = optionProvince.val();
@@ -115,7 +118,7 @@
         selectCity.empty();
         selectCity.append("<option value='0' selected>请选择...</option>");
         if (val !== "0") {
-            $.post("http://localhost:8080/locate/city", {provinceid: val}, function (data, status) {
+            $.post(cityUrl, {provinceid: val}, function (data, status) {
                 data.forEach((item, index, array) => {
                     selectCity.append("<option value='" + item.cityId +"'>" + item.cityName + "</option>");
                 });
@@ -130,7 +133,7 @@
         selectDistrict.empty();
         selectDistrict.append("<option value='0' selected>请选择...</option>");
         if (val !== "0") {
-            $.post("http://localhost:8080/locate/district", {cityid: val}, function (data, status) {
+            $.post(districtUrl, {cityid: val}, function (data, status) {
                 data.forEach((item, index, array) => {
                     selectDistrict.append("<option value='" + item.districtId + "'>" + item.districtName + "</option>");
                 });
