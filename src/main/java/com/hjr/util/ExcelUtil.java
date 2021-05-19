@@ -16,7 +16,7 @@ public class ExcelUtil {
 
     private ExcelUtil() {}
 
-    public static XSSFWorkbook checkedListToExcel(List<Checked> checkedList, String studentName) {
+    public static XSSFWorkbook checkedListToExcel(List<Checked> checkedList, List<String> checkedLocateList, String studentName) {
         //创建Excel文件
         XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -25,8 +25,11 @@ public class ExcelUtil {
 
         //设置每一列的宽度
         sheet.setColumnWidth(0, 22 * 256);
-        sheet.setColumnWidth(1, 10 * 256);
-        sheet.setColumnWidth(2, 22 * 256);
+        sheet.setColumnWidth(1, 14 * 256);
+        sheet.setColumnWidth(2, 21 * 256);
+        sheet.setColumnWidth(3, 10 * 256);
+        sheet.setColumnWidth(4, 22 * 256);
+        sheet.setColumnWidth(5, 22 * 256);
 
         //创建标题行
         XSSFRow titleRow = sheet.createRow(0);
@@ -49,7 +52,7 @@ public class ExcelUtil {
         titleCell.setCellStyle(titleStyle);
 
         //合并标题的单元格
-        CellRangeAddress titleCellAddresses = new CellRangeAddress(0, 0, 0, 1);
+        CellRangeAddress titleCellAddresses = new CellRangeAddress(0, 0, 0, 4);
         sheet.addMergedRegion(titleCellAddresses);
 
         //创建表头行
@@ -63,9 +66,21 @@ public class ExcelUtil {
         checkedTimeHeaderCell.setCellValue("签到时间");
         checkedTimeHeaderCell.setCellStyle(headerStyle);
 
-        XSSFCell checkedTemperatureHeaderCell = headerRow.createCell(1);
-        checkedTemperatureHeaderCell.setCellValue("签到体温");
+        XSSFCell checkedIsFeverHeaderCell = headerRow.createCell(1);
+        checkedIsFeverHeaderCell.setCellValue("当天健康状况");
+        checkedIsFeverHeaderCell.setCellStyle(headerStyle);
+
+        XSSFCell checkedIsContactHeaderCell = headerRow.createCell(2);
+        checkedIsContactHeaderCell.setCellValue("当天是否接触新冠患者");
+        checkedIsContactHeaderCell.setCellStyle(headerStyle);
+
+        XSSFCell checkedTemperatureHeaderCell = headerRow.createCell(3);
+        checkedTemperatureHeaderCell.setCellValue("当天体温");
         checkedTemperatureHeaderCell.setCellStyle(headerStyle);
+
+        XSSFCell checkedDistrictHeaderCell = headerRow.createCell(4);
+        checkedDistrictHeaderCell.setCellValue("当天签到地");
+        checkedDistrictHeaderCell.setCellStyle(headerStyle);
 
         //创建表体行的两种样式
         XSSFCellStyle oddValueStyle = workbook.createCellStyle();
@@ -84,16 +99,31 @@ public class ExcelUtil {
             XSSFCell checkedTimeValueCell = row.createCell(0);
             checkedTimeValueCell.setCellValue(checked.getCheckedTime().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss")));
 
-            XSSFCell checkedTemperatureValueCell = row.createCell(1);
+            XSSFCell checkedIsFeverValueCell = row.createCell(1);
+            checkedIsFeverValueCell.setCellValue(checked.getCheckedIsFever() ? "有发烧咳嗽症状" : "健康");
+
+            XSSFCell checkedIsContactValueCell = row.createCell(2);
+            checkedIsContactValueCell.setCellValue(checked.getCheckedIsContact() ? "是" : "否");
+
+            XSSFCell checkedTemperatureValueCell = row.createCell(3);
             checkedTemperatureValueCell.setCellValue(checked.getCheckedTemperature() + "摄氏度");
+
+            XSSFCell checkedDistrictValueCell = row.createCell(4);
+            checkedDistrictValueCell.setCellValue(checkedLocateList.get(i));
 
             if ((i + 1) % 2 == 1) {
                 checkedTimeValueCell.setCellStyle(oddValueStyle);
+                checkedIsFeverValueCell.setCellStyle(oddValueStyle);
+                checkedIsContactValueCell.setCellStyle(oddValueStyle);
                 checkedTemperatureValueCell.setCellStyle(oddValueStyle);
+                checkedDistrictValueCell.setCellStyle(oddValueStyle);
             }
             else {
                 checkedTimeValueCell.setCellStyle(evenValueStyle);
+                checkedIsFeverValueCell.setCellStyle(evenValueStyle);
+                checkedIsContactValueCell.setCellStyle(evenValueStyle);
                 checkedTemperatureValueCell.setCellStyle(evenValueStyle);
+                checkedDistrictValueCell.setCellStyle(evenValueStyle);
             }
         }
 
@@ -102,7 +132,7 @@ public class ExcelUtil {
         generationTimeHeaderStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         generationTimeHeaderStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 244, (byte) 176, (byte) 132}, new DefaultIndexedColorMap()));
 
-        XSSFCell generationTimeHeaderCell = headerRow.createCell(2);
+        XSSFCell generationTimeHeaderCell = headerRow.createCell(5);
         generationTimeHeaderCell.setCellValue("生成时间");
         generationTimeHeaderCell.setCellStyle(generationTimeHeaderStyle);
 
@@ -110,7 +140,7 @@ public class ExcelUtil {
         generationTimeValueStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         generationTimeValueStyle.setFillForegroundColor(new XSSFColor(new byte[]{(byte) 252, (byte) 228, (byte) 214}, new DefaultIndexedColorMap()));
 
-        XSSFCell generationTimeValueCell = sheet.getRow(2).createCell(2);
+        XSSFCell generationTimeValueCell = sheet.getRow(2).createCell(5);
         generationTimeValueCell.setCellValue(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss")));
         generationTimeValueCell.setCellStyle(generationTimeValueStyle);
 

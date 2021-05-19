@@ -129,10 +129,14 @@ public class AdminController {
     @RequestMapping("/downloadcheckedlist")
     public void downloadcheckedlist(HttpServletResponse response, @RequestParam("id") Integer studentId, @RequestParam("name") String studentName) {
         List<Checked> checkedList = checkedService.findCheckedByStudentId(studentId);
+        List<String> checkedLocateStringList = checkedList.stream()
+                .map(checked -> districtService.districtToString(checked.getCheckedDistrictId()))
+                .collect(Collectors.toList());
+
         String fileName = studentName + "-签到记录.xlsx";
         String headerName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
         response.setHeader("Content-Disposition", "attachment;filename=" + headerName);
-        XSSFWorkbook workbook = ExcelUtil.checkedListToExcel(checkedList, studentName);
+        XSSFWorkbook workbook = ExcelUtil.checkedListToExcel(checkedList, checkedLocateStringList, studentName);
 
         try {
             ServletOutputStream outputStream = response.getOutputStream();

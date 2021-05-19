@@ -24,7 +24,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Controller
@@ -106,10 +105,14 @@ public class StudentController {
         Student student = (Student) session.getAttribute("student");
 
         List<Checked> checkedList = checkedService.findCheckedByStudentId(student.getStudentId());
+        List<String> checkedLocateStringList = checkedList.stream()
+                .map(checked -> districtService.districtToString(checked.getCheckedDistrictId()))
+                .collect(Collectors.toList());
+
         String fileName = student.getStudentName() + "-签到记录.xlsx";
         String headerName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
         response.setHeader("Content-Disposition", "attachment;filename=" + headerName);
-        XSSFWorkbook workbook = ExcelUtil.checkedListToExcel(checkedList, student.getStudentName());
+        XSSFWorkbook workbook = ExcelUtil.checkedListToExcel(checkedList, checkedLocateStringList, student.getStudentName());
 
         try {
             ServletOutputStream outputStream = response.getOutputStream();
