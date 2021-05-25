@@ -53,7 +53,14 @@
             </div>
         </div>
     </form>
+
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <a href="http://beian.miit.gov.cn">鄂ICP备2021009043号-1</a>
+        </div>
+    </div>
 </div>
+
 <div class="container" th:if="${sessionFlag} eq 'student'" th:with="student=${#session.getAttribute('student')}">
     <div class="row">
         <div class="col-12 col-md-5 offset-md-3">
@@ -70,7 +77,14 @@
             <a class="btn btn-primary" role="button" th:href="@{/student}">进入系统</a>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <a href="http://beian.miit.gov.cn">鄂ICP备2021009043号-1</a>
+        </div>
+    </div>
 </div>
+
 <div class="container" th:if="${sessionFlag} eq 'admin'" th:with="admin=${#session.getAttribute('admin')}">
     <div class="row">
         <div class="col-12 col-md-5 offset-md-3">
@@ -85,6 +99,12 @@
 
         <div class="col-6 col-md-2 offset-md-1">
             <a class="btn btn-primary" role="button" th:href="@{/admin}">进入系统</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <a href="http://beian.miit.gov.cn">鄂ICP备2021009043号-1</a>
         </div>
     </div>
 </div>

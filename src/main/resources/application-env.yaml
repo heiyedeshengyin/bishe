@@ -8,3 +8,5 @@ spring:
   redis:
     password: lalalalala
     database: 1
+
+register-key: dbd0e9f0-688c-4dea-85d4-da0d9aa652ba
