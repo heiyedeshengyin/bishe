@@ -7,6 +7,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +43,22 @@ public class DistrictRedisUtil extends RedisUtil {
         hashOperations.putAll(key, districtMapById);
     }
 
+    public void setRiskyDistrictList(String key, List<District> districtList) {
+        ListOperations<String, String> listOperations = redisTemplate.opsForList();
+
+        List<String> districtJsonList = districtList.stream()
+                .map(new Function<District, String>() {
+                    @Override
+                    @SneakyThrows(JsonProcessingException.class)
+                    public String apply(District district) {
+                        return objectMapper.writeValueAsString(district);
+                    }
+                })
+                .collect(Collectors.toList());
+
+        listOperations.leftPushAll(key, districtJsonList);
+    }
+
     public District getDistrictById(String key, Integer districtId) {
         HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
 
@@ -73,5 +90,27 @@ public class DistrictRedisUtil extends RedisUtil {
                 })
                 .sorted(Comparator.comparingInt(District::getDistrictId))
                 .collect(Collectors.toList());
+    }
+
+    public List<District> getRiskyDistrictList(String key) {
+        ListOperations<String, String> listOperations = redisTemplate.opsForList();
+
+        List<String> districtJsonList = listOperations.range(key, 0, -1);
+
+        if (districtJsonList != null) {
+            return districtJsonList.stream()
+                    .map(new Function<String, District>() {
+                        @Override
+                        @SneakyThrows(JsonProcessingException.class)
+                        public District apply(String json) {
+                            return objectMapper.readValue(json, District.class);
+                        }
+                    })
+                    .sorted(Comparator.comparingInt(District::getDistrictId))
+                    .collect(Collectors.toList());
+        }
+        else {
+            return null;
+        }
     }
 }

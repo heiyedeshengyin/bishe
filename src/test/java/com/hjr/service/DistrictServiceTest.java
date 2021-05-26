@@ -1,6 +1,7 @@
 package com.hjr.service;
 
 import com.hjr.been.District;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,21 @@ public class DistrictServiceTest {
     public void testFindDistrictById() {
         District district = districtService.findDistrictById(420112);
         System.out.println(district);
+    }
+
+    @Test
+    @DisplayName("DistrictService findRiskyDistrict Test")
+    public void testFindRiskyDistrict() {
+        List<District> districtList = districtService.findRiskyDistrict();
+        for (District district : districtList) {
+            System.out.println(district);
+        }
+    }
+
+    @Test
+    @Disabled
+    @DisplayName("DostrictService updateDistrictRisky Test")
+    public void testUpdateDistrictRisky() {
+        districtService.updateDistrictRisky(420112, false);
     }
 }

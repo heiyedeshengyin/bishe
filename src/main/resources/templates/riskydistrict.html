@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Risky District</title>
+</head>
+
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">地区Id</th>
+            <th scope="col">地区名</th>
+            <th scope="col">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="district : ${districtList}">
+            <td th:text="${district.districtId}"></td>
+            <td th:text="${district.districtName}"></td>
+            <td>
+                <form method="post" th:action="@{/admin/deleterisky}">
+                    <input type="hidden" th:value="${district.districtId}" name="districtId">
+                    <button type="submit" class="btn btn-danger">删除</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRiskyModal">添加风险地区</button>
+<a class="btn btn-primary" th:href="@{/admin}" role="button">返回管理员主页</a>
+
+<form method="post" th:action="@{/admin/addrisky}">
+    <div class="modal fade" id="addRiskyModal" tabindex="-1" aria-labelledby="addRiskyModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addRiskyModalLabel">添加风险地区</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="riskyProvinceId">选择目前所在的省份</label>
+                        <select class="form-control" id="riskyProvinceId">
+                            <option value="0" selected>请选择...</option>
+                            <option th:each="province : ${provinceList}" th:value="${province.provinceId}" th:text="${province.provinceName}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="riskyCityId">选择目前所在的城市</label>
+                        <select class="form-control" id="riskyCityId">
+                            <option value="0" selected>请选择...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="riskyDistrictId">选择目前所在的地区</label>
+                        <select class="form-control" id="riskyDistrictId" name="districtId">
+                            <option value="0" selected>请选择...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:inline="javascript">
+    const cityUrl = /*[[@{/locate/city}]]*/ "http://localhost:8080/locate/city";
+    const districtUrl = /*[[@{/locate/district}]]*/ "http://localhost:8080/locate/district";
+
+    $("#riskyProvinceId").change(function () {
+        var optionProvince = $("#riskyProvinceId option:selected");
+        var val = optionProvince.val();
+        var selectCity = $("#riskyCityId");
+        var selectDistrict = $("#riskyDistrictId");
+        selectDistrict.empty();
+        selectDistrict.append("<option value='0' selected>请选择...</option>");
+        selectCity.empty();
+        selectCity.append("<option value='0' selected>请选择...</option>");
+        if (val !== "0") {
+            $.post(cityUrl, {provinceid: val}, function (data, status) {
+                data.forEach((item, index, array) => {
+                    selectCity.append("<option value='" + item.cityId +"'>" + item.cityName + "</option>");
+                });
+            });
+        }
+    });
+
+    $("#riskyCityId").change(function () {
+        var optionDistrict = $("#riskyCityId option:selected");
+        var val = optionDistrict.val();
+        var selectDistrict = $("#riskyDistrictId");
+        selectDistrict.empty();
+        selectDistrict.append("<option value='0' selected>请选择...</option>");
+        if (val !== "0") {
+            $.post(districtUrl, {cityid: val}, function (data, status) {
+                data.forEach((item, index, array) => {
+                    selectDistrict.append("<option value='" + item.districtId + "'>" + item.districtName + "</option>");
+                });
+            });
+        }
+    });
+</script>
+</body>
+</html>

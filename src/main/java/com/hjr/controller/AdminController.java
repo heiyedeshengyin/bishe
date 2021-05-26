@@ -1,12 +1,7 @@
 package com.hjr.controller;
 
-import com.hjr.been.Admin;
-import com.hjr.been.Checked;
-import com.hjr.been.Student;
-import com.hjr.service.AdminService;
-import com.hjr.service.CheckedService;
-import com.hjr.service.DistrictService;
-import com.hjr.service.StudentService;
+import com.hjr.been.*;
+import com.hjr.service.*;
 import com.hjr.util.ExcelUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +37,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private ProvinceService provinceService;
 
     @Autowired
     private DistrictService districtService;
@@ -176,6 +174,31 @@ public class AdminController {
         session.setAttribute("admin", updateAdmin);
 
         return "redirect:/admin/info";
+    }
+
+    @RequestMapping("/riskydistrict")
+    public String riskydistrict(HttpServletRequest request) {
+        List<Province> provinceList = provinceService.findAllProvince();
+        List<District> districtList = districtService.findRiskyDistrict();
+
+        request.setAttribute("provinceList", provinceList);
+        request.setAttribute("districtList", districtList);
+
+        return "riskydistrict";
+    }
+
+    @PostMapping("/addrisky")
+    public String addrisky(Integer districtId) {
+        districtService.updateDistrictRisky(districtId, true);
+
+        return "redirect:/admin/riskydistrict";
+    }
+
+    @PostMapping("/deleterisky")
+    public String deleterisky(Integer districtId) {
+        districtService.updateDistrictRisky(districtId, false);
+
+        return "redirect:/admin/riskydistrict";
     }
 
     @RequestMapping("/exit")

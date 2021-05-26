@@ -7,4 +7,5 @@ public class District {
     private Integer districtId;
     private String districtName;
     private Integer districtCityId;
+    private Boolean districtIsRisky;
 }

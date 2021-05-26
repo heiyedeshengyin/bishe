@@ -69,6 +69,29 @@ public class DistrictService {
         }
     }
 
+    public List<District> findRiskyDistrict() {
+        if (districtRedisUtil.hasKey("district_risky_list")) {
+            log.info("Find Risky District List in Redis");
+            return districtRedisUtil.getRiskyDistrictList("district_risky_list");
+        }
+        else {
+            List<District> riskyDistrictList = districtMapper.findRiskyDistrict();
+            if (riskyDistrictList != null && !riskyDistrictList.isEmpty()) {
+                districtRedisUtil.setRiskyDistrictList("district_risky_list", riskyDistrictList);
+            }
+
+            log.info("Find Risky District List in Database");
+            return riskyDistrictList;
+        }
+    }
+
+    public void updateDistrictRisky(Integer districtId, Boolean isRisky) {
+        int cityId = (districtId / 100) * 100;
+        districtMapper.updateDistrictRisky(districtId, isRisky);
+        districtRedisUtil.deleteKey(DISTRICT_MAP_REDIS_KEY_PREFIX + Integer.toString(cityId));
+        districtRedisUtil.deleteKey("district_risky_list");
+    }
+
     public String districtToString(Integer districtId) {
         int cityId = (districtId / 100) * 100;
         int provinceId = (districtId / 10000) * 10000;
