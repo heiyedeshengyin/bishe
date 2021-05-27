@@ -18,9 +18,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr th:each="district : ${districtList}">
+        <tr th:each="district, stat : ${districtList}">
             <td th:text="${district.districtId}"></td>
-            <td th:text="${district.districtName}"></td>
+            <td th:text="${locateStringList.get(stat.index)}"></td>
             <td>
                 <form method="post" th:action="@{/admin/deleterisky}">
                     <input type="hidden" th:value="${district.districtId}" name="districtId">

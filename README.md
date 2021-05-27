@@ -84,7 +84,6 @@ create table checked (
     constraint checked_student_fk foreign key (checked_student_id) references student(student_id)
 );
 ```
-
 #### 省份表
 ```mysql
 create table province (
@@ -92,7 +91,6 @@ create table province (
     province_name varchar(32)
 );
 ```
-
 #### 城市表
 ```mysql
 create table city (
@@ -102,13 +100,13 @@ create table city (
     constraint city_province_fk foreign key (city_province_id) references province(province_id)
 );
 ```
-
 #### 地区表
 ```mysql
 create table district (
     district_id int primary key,
     district_name varchar(32),
     district_city_id int,
+    district_is_risky bool not null default false,
     constraint district_city_fk foreign key (district_city_id) references city(city_id)
 );
 ```

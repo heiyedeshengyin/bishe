@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Controller
@@ -180,9 +181,13 @@ public class AdminController {
     public String riskydistrict(HttpServletRequest request) {
         List<Province> provinceList = provinceService.findAllProvince();
         List<District> districtList = districtService.findRiskyDistrict();
+        List<String> locateStringList = districtList.stream()
+                .map(district -> districtService.districtToString(district.getDistrictId()))
+                .collect(Collectors.toList());
 
         request.setAttribute("provinceList", provinceList);
         request.setAttribute("districtList", districtList);
+        request.setAttribute("locateStringList", locateStringList);
 
         return "riskydistrict";
     }
