@@ -1,0 +1,11 @@
+org.springframework.context.ApplicationContextInitializer=\
+com.hjr.init.MyApplicationInitializer
+
+org.springframework.context.ApplicationListener=\
+com.hjr.listener.MyApplicationListener
+
+org.springframework.boot.SpringApplicationRunListener=\
+com.hjr.listener.MySpringApplicationRunListener
+
+org.springframework.boot.BootstrapRegistryInitializer=\
+com.hjr.init.MyBootstrapRegistryInitializer
